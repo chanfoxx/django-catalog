@@ -143,4 +143,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Fixture file for database.
 
-DATA_FILE = os.path.join(BASE_DIR, 'fixtures', 'data.json')
+CATEGORY_FILE = os.path.join(BASE_DIR, 'fixtures', 'category.json')
+PRODUCT_FILE = os.path.join(BASE_DIR, 'fixtures', 'product.json')
