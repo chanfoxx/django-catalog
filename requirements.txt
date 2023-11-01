@@ -1,0 +1,5 @@
+Django
+ipython
+Pillow
+psycopg2
+python-dotenv
