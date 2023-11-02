@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from catalog.models import Product, Category
+from catalog.models import Product, Category, Contact
 
 
 def main(request):
@@ -15,6 +15,12 @@ def main(request):
 
 def contact(request):
     """Контактная страница."""
+    contact_list = Contact.objects.all()
+
+    context = {
+        'object_list': contact_list,
+        'title': 'Контакты'
+    }
     if request.method == 'POST':
         name = request.POST.get('name')
         phone = request.POST.get('phone')
@@ -22,7 +28,10 @@ def contact(request):
         message = request.POST.get('message')
         print(f'У Вас новое сообщение от {name}'
               f'(phone: {phone}, e-mail: {email}): "{message}"')
-        return render(request, 'catalog/contact.html')
+
+    return render(request, 'catalog/contact.html', context)
+
+
 
 
 def categories(request):
