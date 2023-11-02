@@ -1,0 +1,62 @@
+{% load static %}
+{% load custom_tags %}
+<head>
+    <link href="{% static 'catalog/css/carousel.css' %}" rel="stylesheet">
+</head>
+<!-- Код карусели -->
+<div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true"
+                aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img class="bd-placeholder-img" width="100%" height="100%" aria-hidden="true"
+                 src="{% mediapath object_list.1.image %}">
+            <div class="container">
+                <div class="carousel-caption text-bg text-start text-white">
+                    <h1>{{ object_list.1|title }}</h1>
+                    <p class="opacity-75">{{ object_list.1.description }}</p>
+                    <p><a class="btn btn-lg btn-secondary" href="{% url 'catalog:goods' object_list.1.pk %}">Увидеть
+                        больше</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img class="bd-placeholder-img" width="100%" height="100%" aria-hidden="true"
+                 src="{% mediapath object_list.5.image %}">
+            <div class="container">
+                <div class="carousel-caption text-white text-bg">
+                    <h1>{{ object_list.5|title }}</h1>
+                    <p>{{ object_list.5.description }}</p>
+                    <p><a class="btn btn-lg btn-primary" href="{% url 'catalog:goods' object_list.5.pk %}">Увидеть
+                        больше</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img class="bd-placeholder-img" width="100%" height="100%" aria-hidden="true"
+                 src="{% mediapath object_list.0.image %}">
+            <div class="container">
+                <div class="carousel-caption text-end text-light text-bg">
+                    <h1>{{ object_list.0|title }}</h1>
+                    <p>{{ object_list.0.description }}</p>
+                    <p><a class="btn btn-lg btn-success" href="{% url 'catalog:goods' object_list.0.pk %}">Увидеть
+                        больше</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+</div>
+<!-- Конец карусели -->
