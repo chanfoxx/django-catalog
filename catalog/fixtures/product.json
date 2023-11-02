@@ -1,0 +1,197 @@
+[
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "title": "Minecraft",
+      "description": "Minecraft — игра для любителей ставить блоки друг на друга и находить приключения на свою голову.",
+      "category": 3,
+      "image": "images/product/minecraft.png",
+      "price": "23.99",
+      "date_add": "2023-11-01T20:14:58.234Z",
+      "date_modified": "2023-11-01T20:14:58.234Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "title": "Outlast",
+      "description": "Outlast — компьютерная игра в жанре survival horror от первого лица. Действие Outlast происходит в обветшалой психиатрической больнице.",
+      "category": 1,
+      "image": "images/product/outlast.jpg",
+      "price": "2.99",
+      "date_add": "2023-11-01T20:16:05.548Z",
+      "date_modified": "2023-11-01T20:16:05.548Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "title": "Dishonored",
+      "description": "Компьютерная игра в жанре стелс-экшен от первого лица с элементами RPG, разработанная французской компанией Arkane Studios и изданная Bethesda Softworks.",
+      "category": 2,
+      "image": "images/product/dishonored.jpg",
+      "price": "9.99",
+      "date_add": "2023-11-01T20:17:26.379Z",
+      "date_modified": "2023-11-01T20:17:26.379Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+      "title": "Hogwarts Legasy",
+      "description": "Hogwarts Legacy — компьютерная игра в жанре action/RPG. Действие игры разворачивается в фэнтезийной вселенной «Гарри Поттера» в XIX веке.",
+      "category": 2,
+      "image": "images/product/hogwarts_legasy.jpg",
+      "price": "49.99",
+      "date_add": "2023-11-01T20:18:33.049Z",
+      "date_modified": "2023-11-01T20:18:33.049Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+      "title": "F.E.A.R.",
+      "description": "F.E.A.R. First Encounter Assault Recon — компьютерная игра, шутер от первого лица с элементами survival horror.",
+      "category": 6,
+      "image": "images/product/fear.jpeg",
+      "price": "8.24",
+      "date_add": "2023-11-01T20:19:33.069Z",
+      "date_modified": "2023-11-01T20:19:33.069Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 6,
+    "fields": {
+      "title": "Resident Evil 4 Remake",
+      "description": "Resident Evil 4, известная в Японии как Biohazard RE:4 — компьютерная игра в жанрах survival horror и шутера от третьего лица. Является ремейком одноимённой игры 2005 года — шестой в основной серии Resident Evil.",
+      "category": 1,
+      "image": "images/product/resident_evil_4.jpg",
+      "price": "59.99",
+      "date_add": "2023-11-01T20:20:21.271Z",
+      "date_modified": "2023-11-01T20:20:21.271Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 7,
+    "fields": {
+      "title": "Half-Life: Alyx",
+      "description": "Half-Life: Alyx — компьютерная игра в жанре шутера от первого лица для устройств виртуальной реальности, разработанная и изданная американской компанией Valve.",
+      "category": 6,
+      "image": "images/product/half_life_alyx.jpeg",
+      "price": "59.99",
+      "date_add": "2023-11-01T20:21:00.526Z",
+      "date_modified": "2023-11-01T20:21:00.526Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 8,
+    "fields": {
+      "title": "Call of Duty 4: Modern Warfare",
+      "description": "Call of Duty 4: Modern Warfare — компьютерная игра в жанре шутера от первого лица. Является четвёртой в серии Call of Duty и первой в подсерии Modern Warfare; официально проект был анонсирован 26 мая 2007 года.",
+      "category": 6,
+      "image": "",
+      "price": "19.99",
+      "date_add": "2023-11-01T20:21:48.184Z",
+      "date_modified": "2023-11-01T20:21:48.184Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 9,
+    "fields": {
+      "title": "Little Nightmares",
+      "description": "Little Nightmares — компьютерная игра в жанре платформера с элементами квеста и хоррора, разработанная шведской компанией Tarsier Studios и выпущенная компанией Bandai Namco Entertainment. Игра вышла 28 апреля 2017 года на платформах Windows, PlayStation 4, Xbox One. 12 декабря 2023 года выйдет мобильное издание игры.",
+      "category": 1,
+      "image": "images/product/little_nightmares.jpg",
+      "price": "4.99",
+      "date_add": "2023-11-01T20:22:24.896Z",
+      "date_modified": "2023-11-01T20:22:24.896Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 10,
+    "fields": {
+      "title": "Friday the 13th: The Game",
+      "description": "Friday the 13th: The Game — компьютерная игра в жанре Survival horror. Игра основана на франшизе с тем же именем, принадлежащей New Line Cinema.",
+      "category": 1,
+      "image": "images/product/fridat_the_13th.jpg",
+      "price": "4.99",
+      "date_add": "2023-11-01T20:23:01.405Z",
+      "date_modified": "2023-11-01T20:23:01.405Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 11,
+    "fields": {
+      "title": "Batman: Arkham City",
+      "description": "Batman: Arkham City — компьютерная игра в жанре action-adventure в открытом мире с элементами стелса.",
+      "category": 2,
+      "image": "images/product/batman_arkham_city.webp",
+      "price": "4.99",
+      "date_add": "2023-11-01T20:23:35.916Z",
+      "date_modified": "2023-11-01T20:23:35.916Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 12,
+    "fields": {
+      "title": "Elden Ring",
+      "description": "Elden Ring — компьютерная игра в жанре action/RPG с открытым миром.",
+      "category": 2,
+      "image": "images/product/elden_ring.jpg",
+      "price": "59.99",
+      "date_add": "2023-11-01T20:24:19.696Z",
+      "date_modified": "2023-11-01T20:24:19.696Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 13,
+    "fields": {
+      "title": "House Flipper",
+      "description": "House Flipper — компьютерная игра в жанре симулятор.",
+      "category": 3,
+      "image": "images/product/house_flipper.jpg",
+      "price": "24.99",
+      "date_add": "2023-11-01T20:24:55.783Z",
+      "date_modified": "2023-11-01T20:24:55.783Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 14,
+    "fields": {
+      "title": "Need for Speed: Most Wanted",
+      "description": "Need for Speed: Most Wanted a Criterion Game — компьютерная игра серии Need for Speed в жанре аркадных автогонок.",
+      "category": 5,
+      "image": "images/product/nfs_most_wanted.jpg",
+      "price": "12.99",
+      "date_add": "2023-11-01T20:25:34.303Z",
+      "date_modified": "2023-11-01T20:25:34.303Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 15,
+    "fields": {
+      "title": "Mortal Kombat 11",
+      "description": "Mortal Kombat 11 — видеоигра в жанре файтинг, созданная Эдом Буном и Джоном Тобиасом.",
+      "category": 4,
+      "image": "images/product/mortal_kombat_11.jpg",
+      "price": "4.99",
+      "date_add": "2023-11-01T20:26:48.886Z",
+      "date_modified": "2023-11-01T20:26:48.886Z"
+    }
+  }
+]
