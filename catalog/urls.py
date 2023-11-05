@@ -15,7 +15,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from catalog.views import MainTemplateView, ContactTemplateView, CategoryListView, ProductListView, ProductDetailView
+from catalog.views import (MainTemplateView, ContactTemplateView, CategoryListView,
+                           ProductListView, ProductDetailView, BlogListView,
+                           BlogCreateView, BlogDetailView, BlogUpdateView, BlogDeleteView)
 from catalog.apps import CatalogConfig
 
 
@@ -28,4 +30,9 @@ urlpatterns = [
     path('categories/', CategoryListView.as_view(), name='categories'),
     path('categories/<int:pk>/', ProductListView.as_view(), name='goods'),
     path('products/<int:pk>/', ProductDetailView.as_view(), name='product'),
+    path('blog/', BlogListView.as_view(), name='blog_list'),
+    path('blog/create/', BlogCreateView.as_view(), name='blog_create'),
+    path('blog/detail/<int:pk>/', BlogDetailView.as_view(), name='blog_detail'),
+    path('blog/edit/<int:pk>/', BlogUpdateView.as_view(), name='blog_update'),
+    path('blog/delete/<int:pk>/', BlogDeleteView.as_view(), name='blog_delete'),
 ]
