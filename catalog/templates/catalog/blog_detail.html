@@ -1,0 +1,29 @@
+{% extends "catalog/base.html" %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center"></div>
+<div class="container">
+    <div class="row text-start">
+        <div class="col-lg-12 col-md-6 col-sm-12">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Блоговая запись "{{ object.title }}" ({{ object.slug }})</h4>
+                </div>
+                <div class="card-body">
+                    <img src="/media/{{ object.preview }}"
+                         class="img-fluid img-thumbnail thumbnail-box-shadow" alt="Image"
+                    >
+                    <p>
+                        {{ object.description }}
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-md btn-success" type="button" href="{% url 'catalog:blog_list' %}">Назад</a>
+                </div>
+                <div class="card-footer">
+                    Просмотры: {{ object.view_count }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
