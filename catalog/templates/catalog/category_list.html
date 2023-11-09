@@ -10,9 +10,8 @@
                  width="140" height="140" src="{{ object.image|mediapath }}" alt="Placeholder">
             <h2 class="fw-normal">{{ object|title }}</h2>
             <p>{{ object.description|slice:100 }}</p>
-            <p><a class="btn" style="background-image: linear-gradient(to right, #8A2BE2, #6A1D9B);" href="{% url 'catalog:goods' object.pk %}">
-                Весь список&raquo;
-            </a></p>
+            <p><a class="btn" style="background-color: #2F4F4F;"
+                  href="{% url 'catalog:goods' object.pk %}">Весь список</a></p>
         </div>
         {% endfor %}
     </div>
