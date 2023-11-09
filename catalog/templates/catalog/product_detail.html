@@ -8,6 +8,12 @@
                 <h4 class="mb-0">{{ object.title }}</h4>
                 <div class="mb-1 text-body-secondary">Price: $ {{ object.price }}</div>
                 <p class="card-text mb-auto">{{ object.description }}</p>
+                <p class="card-text mb-auto">
+                    Актуальна версия:
+                    {% if object.active_version %}
+                        {{ object.active_version }}
+                    {% endif %}
+                </p>
                 <a href="#" class="icon-link gap-1 icon-link-hover stretched-link" style="font-size: 1.5em;">
                     В корзину
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"

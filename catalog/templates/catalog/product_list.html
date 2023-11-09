@@ -1,25 +1,37 @@
 {% extends 'catalog/base.html' %}
 {% load custom_filter %}
 {% block content %}
+<div class="col-12 mb-5 text-center mt-5">
+    <a class="btn btn-lg btn-primary" href="{% url 'catalog:create_product' %}">Добавить товар</a>
+</div>
 <div class="row mb-2">
     {% for object in object_list %}
     <div class="col-md-6">
-      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-primary-emphasis">{{ category|title }}</strong>
-          <h4 class="mb-0">{{ object.title }}</h4>
-          <div class="mb-1 text-body-secondary">Price: {{ object.price }}</div>
-          <p class="card-text mb-auto">{{ object.description|slice:120 }}</p>
-          <a href="{% url 'catalog:product' object.pk %}" class="icon-link gap-1 icon-link-hover stretched-link">
-            Описание
-            <svg class="bi"><use xlink:href="#chevron-right"/></svg>
-          </a>
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-primary-emphasis">{{ category|title }}</strong>
+                <h4 class="mb-0">{{ object.title }}</h4>
+                <div class="mb-1 text-body-secondary">Price: {{ object.price }}</div>
+                <p class="card-text mb-auto">{{ object.description|slice:120 }}</p>
+            </div>
+            <div class="col-auto d-none d-lg-block">
+                <img class="bd-placeholder-img" width="200" height="260" src="{{ object.image|mediapath }}" alt="Photo">
+            </div>
+            <div class="card-footer mb-3 ml-3" style="padding-left: 20px;">
+                <a class="btn btn-sm btn-success" href="{% url 'catalog:product' object.pk %}"
+                   role="button">Просмотреть</a>
+                <a class="btn btn-sm btn-secondary" href="{% url 'catalog:update_product' object.pk %}"
+                   type="button">Изменить</a>
+                <a class="btn btn-sm btn-danger" href="{% url 'catalog:delete_product' object.pk %}"
+                   type="button">Удалить</a>
+            </div>
+            <div class="card-footer mb-3 mr-3" style="padding-left: 20px;">
+                {% if object.active_version %}
+                    {{ object.active_version }}
+                {% endif %}
+            </div>
         </div>
-        <div class="col-auto d-none d-lg-block">
-            <img class="bd-placeholder-img" width="200" height="260" src="{{ object.image|mediapath }}" alt="Photo">
-        </div>
-      </div>
     </div>
     {% endfor %}
- </div>
+</div>
 {% endblock %}

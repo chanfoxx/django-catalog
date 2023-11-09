@@ -1,6 +1,6 @@
 """Модуль для работы с административной панелью."""
 from django.contrib import admin
-from catalog.models import Product, Category, Contact, Blog
+from catalog.models import Product, Category, Contact, Blog, Version
 
 
 @admin.register(Product)
@@ -9,6 +9,12 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'price', 'category',)
     list_filter = ('category',)
     search_fields = ('title', 'description',)
+
+
+@admin.register(Version)
+class VersionAdmin(admin.ModelAdmin):
+    """Отображение актуальной версии товара в административной панели."""
+    list_display = ('product', 'version_number', 'title', 'is_active')
 
 
 @admin.register(Category)
