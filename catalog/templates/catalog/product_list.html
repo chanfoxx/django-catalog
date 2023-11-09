@@ -10,13 +10,14 @@
     <div class="col-md-6">
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col p-4 d-flex flex-column position-static">
-                <strong class="d-inline-block mb-2 text-primary-emphasis">{{ category|title }}</strong>
+                <strong class="d-inline-block mb-2 text-emphasis">{{ category|title }}</strong>
                 <h4 class="mb-0">{{ object.title }}</h4>
                 <div class="mb-1 text-body-secondary">Price: {{ object.price }}</div>
                 <p class="card-text mb-auto">{{ object.description|slice:120 }}</p>
             </div>
-            <div class="col-auto d-none d-lg-block">
-                <img class="bd-placeholder-img" width="200" height="260" src="{{ object.image|mediapath }}" alt="Photo">
+            <div class="col-auto mx-2 px-2" style="padding-top: 25px;">
+                <img class="border-gradient border-gradient-purple border rounded border-3" width="200" height="260"
+                     src="{{ object.image|mediapath }}" alt="Photo">
             </div>
             <div class="card-footer mb-3 ml-3" style="padding-left: 20px;">
                 <a class="btn btn-sm" style="background-color: #2F4F4F;"
