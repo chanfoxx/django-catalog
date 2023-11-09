@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.forms import inlineformset_factory
 from django.urls import reverse_lazy, reverse
 from pytils.translit import slugify
-from catalog.models import Product, Category, Contact, Blog
+from catalog.forms import BlogForm, ProductForm, VersionForm
+from catalog.models import Product, Category, Contact, Blog, Version
 from django.views.generic import (ListView, DetailView, TemplateView, DeleteView,
                                   CreateView, UpdateView)
 
@@ -80,15 +81,53 @@ class ProductListView(ListView):
         return context_data
 
 
+class ProductCreateView(CreateView):
+    """Класс для создания товара."""
+    model = Product
+    form_class = ProductForm
+    success_url = reverse_lazy('catalog:categories')
+
+
+class ProductUpdateView(UpdateView):
+    """Класс для создания товора."""
+    model = Product
+    form_class = ProductForm
+    success_url = reverse_lazy('catalog:categories')
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        VersionFormset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
+        if self.request.method == 'POST':
+            context_data['formset'] = VersionFormset(self.request.POST, instance=self.object)
+        else:
+            context_data['formset'] = VersionFormset(instance=self.object)
+        return context_data
+
+    def form_valid(self, form):
+        formset = self.get_context_data()['formset']
+        self.object = form.save()
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
+
+        return super().form_valid(form)
+
+
 class ProductDetailView(DetailView):
     """Класс для отображения определенной игры."""
     model = Product
 
 
+class ProductDeleteView(DeleteView):
+    """Класс для удаления определенной блоговой записи."""
+    model = Blog
+    success_url = reverse_lazy('catalog:categories')
+
+
 class BlogCreateView(CreateView):
     """Класс для создания блоговой записи."""
     model = Blog
-    fields = ('title', 'description', 'preview',)
+    form_class = BlogForm
     success_url = reverse_lazy('catalog:blog_list')
 
     def form_valid(self, form):
@@ -130,7 +169,7 @@ class BlogDetailView(DetailView):
 class BlogUpdateView(UpdateView):
     """Класс для изменения определенной блоговой записи."""
     model = Blog
-    fields = ('title', 'description', 'preview',)
+    form_class = BlogForm
 
     def form_valid(self, form):
         """Проверяет валидность формы, если успешно - сохраняет ее."""

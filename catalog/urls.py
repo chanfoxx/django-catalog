@@ -17,7 +17,8 @@ Including another URLconf
 from django.urls import path
 from catalog.views import (MainTemplateView, ContactTemplateView, CategoryListView,
                            ProductListView, ProductDetailView, BlogListView,
-                           BlogCreateView, BlogDetailView, BlogUpdateView, BlogDeleteView)
+                           BlogCreateView, BlogDetailView, BlogUpdateView, BlogDeleteView,
+                           ProductCreateView, ProductUpdateView, ProductDeleteView)
 from catalog.apps import CatalogConfig
 
 
@@ -29,7 +30,10 @@ urlpatterns = [
     path('contacts/', ContactTemplateView.as_view(), name='contact'),
     path('categories/', CategoryListView.as_view(), name='categories'),
     path('categories/<int:pk>/', ProductListView.as_view(), name='goods'),
+    path('create/', ProductCreateView.as_view(), name='create_product'),
+    path('products/<int:pk>/edit/', ProductUpdateView.as_view(), name='update_product'),
     path('products/<int:pk>/', ProductDetailView.as_view(), name='product'),
+    path('products/<int:pk>/delete/', ProductDeleteView.as_view(), name='delete_product'),
     path('blog/', BlogListView.as_view(), name='blog_list'),
     path('blog/create/', BlogCreateView.as_view(), name='blog_create'),
     path('blog/detail/<int:pk>/', BlogDetailView.as_view(), name='blog_detail'),

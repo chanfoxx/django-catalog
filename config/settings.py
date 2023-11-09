@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'catalog',
+    'crispy_forms',
+    'crispy_bootstrap5'
 ]
 
 MIDDLEWARE = [
@@ -145,3 +147,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CATEGORY_FILE = os.path.join(BASE_DIR, 'fixtures', 'category.json')
 PRODUCT_FILE = os.path.join(BASE_DIR, 'fixtures', 'product.json')
+
+
+# Crispy Forms - Bootstrap 5
+# https://github.com/django-crispy-forms/crispy-bootstrap5
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"

@@ -1,3 +1,4 @@
+from typing import Optional
 from django.db import models
 
 
@@ -13,6 +14,10 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     date_add = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
+
+    @property
+    def active_version(self) -> Optional['Version']:
+        return self.version_set.filter(is_active=True).last()
 
     def __str__(self) -> str:
         """Возвращает строковое представление о классе товара."""
@@ -55,6 +60,23 @@ class Contact(models.Model):
         """Метаданные для модели контактных данных."""
         verbose_name = 'Контактные данные'
         verbose_name_plural = 'Контактные данные'
+
+
+class Version(models.Model):
+    """Модель версии."""
+    product = models.ForeignKey('catalog.Product', on_delete=models.PROTECT)
+    version_number = models.CharField(max_length=10, verbose_name='Номер версии')
+    title = models.CharField(max_length=150, verbose_name='Название версии')
+    is_active = models.BooleanField(default=False, verbose_name='Признак активной версии')
+
+    def __str__(self) -> str:
+        """Возвращает строковое представление о классе версий."""
+        return f'{self.version_number} {self.title}'
+
+    class Meta:
+        """Метаданные для модели контактных данных."""
+        verbose_name = 'Версия'
+        verbose_name_plural = 'Версии'
 
 
 class Blog(models.Model):
