@@ -2,7 +2,7 @@
 {% load custom_filter %}
 {% block content %}
 <div class="col-12 mb-5 text-center mt-5">
-    <a class="btn btn-lg btn-primary" href="{% url 'catalog:create_product' %}">Добавить товар</a>
+    <a class="btn btn-lg" style="background-image: linear-gradient(to left, #8A2BE2, #6A1D9B);" href="{% url 'catalog:create_product' %}">Добавить товар</a>
 </div>
 <div class="row mb-2">
     {% for object in object_list %}
@@ -18,11 +18,11 @@
                 <img class="bd-placeholder-img" width="200" height="260" src="{{ object.image|mediapath }}" alt="Photo">
             </div>
             <div class="card-footer mb-3 ml-3" style="padding-left: 20px;">
-                <a class="btn btn-sm btn-success" href="{% url 'catalog:product' object.pk %}"
+                <a class="btn btn-sm btn" style="background-image: linear-gradient(to left, #8A2BE2, #6A1D9B);" href="{% url 'catalog:product' object.pk %}"
                    role="button">Просмотреть</a>
                 <a class="btn btn-sm btn-secondary" href="{% url 'catalog:update_product' object.pk %}"
                    type="button">Изменить</a>
-                <a class="btn btn-sm btn-danger" href="{% url 'catalog:delete_product' object.pk %}"
+                <a class="btn btn-sm" style="background-image: linear-gradient(to right, #DC143C, #8B0000);" href="{% url 'catalog:delete_product' object.pk %}"
                    type="button">Удалить</a>
             </div>
             <div class="card-footer mb-3 mr-3" style="padding-left: 20px;">

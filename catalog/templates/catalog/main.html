@@ -18,11 +18,8 @@
             <h1 class="display-3 fw-bold">ENJOY THE GAME</h1>
             <h3 class="fw-normal text-muted mb-3">Купи, все что ты хочешь, в SkyStore!</h3>
             <div class="d-flex gap-3 justify-content-center lead fw-normal">
-                <a class="icon-link" href="{% url 'catalog:categories' %}">
-                    Жанры
-                    <svg class="bi">
-                        <use xlink:href="#chevron-right"/>
-                    </svg>
+                <a class="fs-4 link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{% url 'catalog:categories' %}">
+                    Жанры игр
                 </a>
             </div>
         </div>
@@ -34,11 +31,13 @@
         {% for object in object_list %}
         <div class="bg-body-tertiary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
             <div class="my-3 py-3">
-                <a href="{% url 'catalog:product' object.pk %}" class="display-5">{{ object.title }}</a>
+                <a href="{% url 'catalog:product' object.pk %}"
+                   class="fs-2 link-light link-offset-1 link-offset-1-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+                    {{ object.title }}
+                </a>
                 <p class="lead">$ {{ object.price }}</p>
             </div>
-            <div class="bg-body-tertiary shadow-sm mx-auto"
-                 style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
+            <div class="bg-body-tertiary shadow-sm mx-auto custom-image">
                 <img src="{% mediapath object.image %}" class="img-thumbnail" alt="Image">
             </div>
         </div>
