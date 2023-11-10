@@ -2,14 +2,6 @@
 {% load static %}
 {% load custom_tags %}
 {% block content %}
-<!-- Стили для svg icons в блоке ожидания -->
-<style>
-    .bg-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    }
-</style>
 <!-- Основной код -->
 <main>
     <!-- Дисплей -->
@@ -18,8 +10,8 @@
             <h1 class="display-3 fw-bold">ENJOY THE GAME</h1>
             <h3 class="fw-normal text-muted mb-3">Купи, все что ты хочешь, в SkyStore!</h3>
             <div class="d-flex gap-3 justify-content-center lead fw-normal">
-                <a class="fs-4 link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-                   href="{% url 'catalog:categories' %}">
+                <a class="fs-4 link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0
+                    link-underline-opacity-75-hover" href="{% url 'catalog:categories' %}">
                     Жанры игр
                 </a>
             </div>
@@ -30,16 +22,18 @@
     <!-- Вывод товаров -->
     <div class="d-md-flex flex-md-equal my-md-3 ps-md-3">
         {% for object in object_list %}
-        <div class="bg-body-tertiary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+        <div class="bg-body-tertiary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden gradient-card">
             <div class="my-3 py-3">
                 <a href="{% url 'catalog:product' object.pk %}"
-                   class="fs-2 link-light link-offset-1 link-offset-1-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
-                    {{ object.title }}
+                   class="fs-2 link-light link-offset-1 link-offset-1-hover link-underline link-underline-opacity-0
+                   link-underline-opacity-75-hover">{{ object.title }}
                 </a>
                 <p class="lead">$ {{ object.price }}</p>
             </div>
             <div class="bg-body-tertiary shadow-sm mx-auto">
-                <img src="{% mediapath object.image %}" class="img-thumbnail" alt="Image">
+                <div style="height: 200px; overflow: hidden;">
+                <img src="{% mediapath object.image %}" class="img-thumbnail" width="350" alt="Image">
+            </div>
             </div>
         </div>
         {% if forloop.counter|divisibleby:2 %}
