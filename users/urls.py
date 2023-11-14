@@ -25,11 +25,14 @@ app_name = UsersConfig.name
 
 urlpatterns = [
     path('', LoginView.as_view(), name='login'),
+
     path('email_verify/', EmailConfirmView.as_view(), name='email_confirm'),
     path('email_verify/error_page/', EmailErrorView.as_view(), name='email_error'),
     path('email_verify/<str:token>/', EmailVerifyView.as_view(), name='email_verify'),
+
     path('logout/', LogoutView.as_view(), name='logout'),
     path('register/', RegisterView.as_view(), name='register'),
     path('profile/', ProfileView.as_view(), name='profile'),
+
     path('reset_password/', PasswordTemplateView.as_view(), name='reset_password'),
 ]
