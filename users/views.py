@@ -13,11 +13,14 @@ from users.models import User, EmailVerification
 
 
 class LoginView(BaseLoginView):
-    template_name = 'users/login.html'
+    """Класс для отображения страницы с авторизацией."""
+    template_name = 'users/login.html'  # Шаблон формы авторизации.
+    extra_context = {'title': 'Авторизация'}  # Название страницы.
 
 
 class PasswordTemplateView(TemplateView):
-    template_name = 'users/password_reset.html'
+    """Класс для отображения страницы с восстановлением пароля."""
+    template_name = 'users/password_reset.html'  # Шаблон восстановления пароля.
     extra_context = {'title': 'Восстановление пароля'}  # Название страницы.
 
     def post(self, request, *args, **kwargs):
@@ -27,7 +30,9 @@ class PasswordTemplateView(TemplateView):
         """
         email = request.POST.get('email')
 
+        # Генерируем новый пароль.
         new_password = User.objects.make_random_password()
+        # Отправляем новый пароль на указанную почту пользователем.
         send_mail(
             subject='Вы сменили пароль.',
             message=f'Ваш новый пароль: {new_password}',
@@ -35,6 +40,7 @@ class PasswordTemplateView(TemplateView):
             recipient_list=[email]
         )
 
+        # Получаем нужного пользователя по e-mail и сохраняем новый пароль.
         user = User.objects.get(email=email)
         user.set_password(new_password)
         user.save()
@@ -43,10 +49,12 @@ class PasswordTemplateView(TemplateView):
 
 
 class LogoutView(BaseLogoutView):
+    """Класс для выхода из текущего пользователя."""
     pass
 
 
 class ProfileView(UpdateView):
+    """Класс для отображения формы редактирования профиля."""
     model = User
     form_class = UserProfileForm
     success_url = reverse_lazy('users:profile')
@@ -56,9 +64,10 @@ class ProfileView(UpdateView):
 
 
 class RegisterView(CreateView):
+    """Класс для отображения регистрации."""
     model = User
     form_class = UserRegisterForm
-    template_name = 'users/register.html'
+    template_name = 'users/register.html'  # Шаблон формы регистрации.
     success_url = reverse_lazy('users:email_confirm')
 
     def form_valid(self, form):
@@ -66,10 +75,13 @@ class RegisterView(CreateView):
         new_user.is_active = False
         new_user.save()
 
+        # Генерируем токен.
         token = get_random_string(length=32)
+        # Сохраняем нового пользователя и токен в бд.
         EmailVerification.objects.create(user=new_user, token=token)
 
         verification_url = f"http://localhost:8000/users/email_verify/{token}/"
+        # Отправляем ссылку на почту пользователю для подтверждения.
         send_mail(
             subject='Подтверждение почты SkyStore',
             message=f'Пожалуйста, перейдите по ссылке для подтверждения почты: {verification_url}',
@@ -80,20 +92,23 @@ class RegisterView(CreateView):
 
 
 class EmailConfirmView(TemplateView):
+    """Класс для отображения страницы с отправкой подтверждения."""
     template_name = 'users/email_verify.html'  # Шаблон подтверждения e-mail.
     extra_context = {'title': 'Подтверждение почты'}  # Название страницы.
 
 
 class EmailErrorView(TemplateView):
-    template_name = 'users/error_page.html'
-    extra_context = {'title': 'Ошибка подтверждения почты'}
+    """Класс для отображения страницы с ошибкой."""
+    template_name = 'users/error_page.html'  # Шаблон ошибки.
+    extra_context = {'title': 'Ошибка подтверждения почты'}  # Название страницы.
 
 
 class EmailVerifyView(View):
     """Класс для отображения страницы с подтверждением e-mail."""
-
     def get(self, request, *args, **kwargs):
+        # Получаем токен из запроса.
         token = self.kwargs.get('token')
+        # Находим нужный токен в бд.
         email_verification = EmailVerification.objects.filter(token=token).first()
 
         if not email_verification:
