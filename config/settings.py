@@ -47,7 +47,8 @@ INSTALLED_APPS = [
 
     'catalog',
     'crispy_forms',
-    'crispy_bootstrap5'
+    'crispy_bootstrap5',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -117,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 
@@ -155,3 +156,19 @@ PRODUCT_FILE = os.path.join(BASE_DIR, 'fixtures', 'product.json')
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+
+# Users settings
+
+AUTH_USER_MODEL = 'users.User'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+# User email settings
+load_dotenv()
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'cchloexx@yandex.ru'
+EMAIL_HOST_PASSWORD = os.getenv('APP_PASSWORD')
+EMAIL_USE_SSL = True
