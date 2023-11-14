@@ -1,0 +1,24 @@
+{% extends 'catalog/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="col-12">
+    <form method="post" enctype="multipart/form-data">
+        <div class="col-md-6 offset-md-1" style="margin-top: 20px;">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        Мой профиль
+                    </h3>
+                </div>
+                <div class="card-body">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button type="submit" class="btn btn-success">
+                        Сохранить
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

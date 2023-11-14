@@ -22,7 +22,7 @@
       "image": "images/product/outlast.jpg",
       "price": "2.99",
       "date_add": "2023-11-01T20:16:05.548Z",
-      "date_modified": "2023-11-01T20:16:05.548Z"
+      "date_modified": "2023-11-09T18:23:37.578Z"
     }
   },
   {
@@ -97,10 +97,10 @@
       "title": "Call of Duty 4: Modern Warfare",
       "description": "Call of Duty 4: Modern Warfare — компьютерная игра в жанре шутера от первого лица. Является четвёртой в серии Call of Duty и первой в подсерии Modern Warfare; официально проект был анонсирован 26 мая 2007 года.",
       "category": 6,
-      "image": "",
+      "image": "images/product/call_of_duty_mw.png",
       "price": "19.99",
       "date_add": "2023-11-01T20:21:48.184Z",
-      "date_modified": "2023-11-01T20:21:48.184Z"
+      "date_modified": "2023-11-11T22:18:16.755Z"
     }
   },
   {
@@ -192,6 +192,32 @@
       "price": "4.99",
       "date_add": "2023-11-01T20:26:48.886Z",
       "date_modified": "2023-11-01T20:26:48.886Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 16,
+    "fields": {
+      "title": "Detroit: Become Human",
+      "description": "Detroit: Become Human — приключенческая компьютерная игра с элементами интерактивного кинематографа. Действие игры происходит в недалёком будущем, где существуют серийно выпускаемые андроиды — роботы-слуги, почти неотличимые от людей. Машины должны беспрекословно подчиняться своим хозяевам, но некоторые из них в результате программного сбоя становятся «девиантами» с собственной волей.",
+      "category": 2,
+      "image": "images/product/detroit_become_human.jpg",
+      "price": "15.99",
+      "date_add": "2023-11-02T12:40:32.667Z",
+      "date_modified": "2023-11-02T12:40:32.667Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 17,
+    "fields": {
+      "title": "Silent Hill 3",
+      "description": "Silent Hill 3 - компьютерная игра в жанрах survival horror и action-adventure, разработанная японской командой Team Silent и изданная Konami. Представляет собой третью часть серии и является прямым сюжетным продолжением первой Silent Hill.",
+      "category": 1,
+      "image": "images/product/silent_hill_2.jpeg",
+      "price": "39.99",
+      "date_add": "2023-11-07T19:08:44.378Z",
+      "date_modified": "2023-11-09T19:10:17.364Z"
     }
   }
 ]

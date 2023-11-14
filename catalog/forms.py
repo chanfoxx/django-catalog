@@ -6,7 +6,7 @@ class ProductForm(forms.ModelForm):
     """Форма для товара."""
     class Meta:
         model = Product
-        exclude = ('date_add',)
+        exclude = ('date_add', 'creator',)
 
     def clean_title(self):
         """Валидация названия товара."""
