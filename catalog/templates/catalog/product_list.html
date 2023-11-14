@@ -15,7 +15,7 @@
                 <strong class="d-inline-block mb-2 text-emphasis">{{ category|title }}</strong>
                 <h4 class="mb-0">{{ object.title }}</h4>
                 <div class="mb-1 text-body-secondary">Price: {{ object.price }}</div>
-                <div class="mb-1 text-body-secondary">Связаться: {{ object.creator|default:"Скрыто" }}</div>
+                <div class="mb-1 text-body-secondary">Связаться: {{ object.creator.first_name|default:"Скрыто" }}</div>
                 <p class="card-text mb-auto">{{ object.description|slice:120 }}</p>
             </div>
             <div class="col-auto mx-2 px-2" style="padding-top: 25px;">
