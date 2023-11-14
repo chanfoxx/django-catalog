@@ -1,0 +1,15 @@
+[
+  {
+    "model": "catalog.blog",
+    "pk": 4,
+    "fields": {
+      "title": "А что Вы собственно хотели?",
+      "slug": "a-chto-vyi-sobstvenno-hoteli",
+      "description": "Тратата та та! :)",
+      "preview": "images/blog/bunny_ray.png",
+      "creation_date": "2023-11-05T18:02:55.751Z",
+      "is_published": true,
+      "view_count": 17
+    }
+  }
+]

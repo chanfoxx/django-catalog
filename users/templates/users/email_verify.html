@@ -1,0 +1,20 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-6">{{ title }}</h1>
+</div>
+<div class="container">
+    <div class="row text-center">
+        <div class="col-lg-12">
+            <div class="card mb-4 box-shadow border border-success">
+                <div class="card-body lh-1">
+                    <div class="d-grid gap-2">
+                        <p>На указанный почтовый ящик придет письмо, содержащее ссылку для подтверждения e-mail адреса.</p>
+                        <p>Пожалуйста, зайдите в Вашу почту, указанную при регистрации, и пройдите по ссылке из письма.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
