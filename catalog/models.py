@@ -1,5 +1,6 @@
 from typing import Optional
 from django.db import models
+from django.conf import settings
 
 
 NULLABLE = {'blank': True, 'null': True}
@@ -14,6 +15,8 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     date_add = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
+                                **NULLABLE, verbose_name='Продавец')
 
     @property
     def active_version(self) -> Optional['Version']:
