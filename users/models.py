@@ -4,6 +4,7 @@ from catalog.models import NULLABLE
 
 
 class User(AbstractUser):
+    """Модель пользователя."""
     username = None
     email = models.EmailField(unique=True, verbose_name='E-mail')
     avatar = models.ImageField(upload_to='images/users/', verbose_name='Аватар', **NULLABLE)
@@ -16,6 +17,16 @@ class User(AbstractUser):
 
 
 class EmailVerification(models.Model):
+    """Модель верификации почты."""
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
     token = models.CharField(max_length=64, verbose_name='Токен', **NULLABLE)
     is_active = models.BooleanField(default=True, verbose_name='Токен активен', **NULLABLE)
+
+    def __str__(self) -> str:
+        """Возвращает строковое представление о классе верификации почты."""
+        return f'{self.user}: "{self.token}"'
+
+    class Meta:
+        """Метаданные для модели верификации почты."""
+        verbose_name = 'Токен для почты'
+        verbose_name_plural = 'Токены для почты'
