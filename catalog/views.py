@@ -18,7 +18,7 @@ class MainTemplateView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         """Возвращает 6 товаров, название магазина."""
         context_data = super().get_context_data(*args, **kwargs)
-        six_products = Product.objects.all()[:6]
+        six_products = Product.objects.filter(is_published=True)[:6]
         context_data['title'] = 'SkyStore'
         context_data['object_list'] = six_products
 
@@ -203,16 +203,14 @@ class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
         return super().form_valid(form)
 
 
-class ProductDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     """Класс для отображения определенной игры."""
     model = Product
-    permission_required = 'catalog.view_product'
 
 
-class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     """Класс для удаления определенной блоговой записи."""
     model = Product
-    permission_required = 'catalog.delete_product'
     success_url = reverse_lazy('catalog:categories')
 
 
@@ -262,11 +260,11 @@ class BlogDetailView(LoginRequiredMixin, DetailView):
         return self.object
 
 
-class BlogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class BlogUpdateView(LoginRequiredMixin, UpdateView):
     """Класс для изменения определенной блоговой записи."""
     model = Blog
     form_class = BlogForm
-    permission_required = 'catalog.change_blog'
+    success_url = reverse_lazy('catalog:blog_list')
 
     def form_valid(self, form):
         """Проверяет валидность формы, если успешно - сохраняет ее."""
@@ -277,13 +275,8 @@ class BlogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
         return super().form_valid(form)
 
-    def get_success_url(self):
-        """Ссылка для перенаправления на определенную запись."""
-        return reverse('catalog:blog_detail', args=[self.kwargs.get('pk')])
 
-
-class BlogDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+class BlogDeleteView(LoginRequiredMixin, DeleteView):
     """Класс для удаления определенной блоговой записи."""
     model = Blog
-    permission_required = 'catalog.delete_blog'
     success_url = reverse_lazy('catalog:blog_list')
