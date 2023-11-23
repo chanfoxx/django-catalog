@@ -1,8 +1,12 @@
+from typing import Any
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.db import transaction
 from django.forms import inlineformset_factory
 from django.urls import reverse_lazy, reverse
 from pytils.translit import slugify
 from catalog.forms import BlogForm, ProductForm, VersionForm
 from catalog.models import Product, Category, Contact, Blog, Version
+# from django.views.generic.edit import FormMixin
 from django.views.generic import (ListView, DetailView, TemplateView, DeleteView,
                                   CreateView, UpdateView)
 
@@ -55,99 +59,184 @@ class ContactTemplateView(TemplateView):
 
 class CategoryListView(ListView):
     """Класс для отображения страницы с жанрами игр."""
-    model = Category
+    model = Category  # Модель.
     extra_context = {'title': 'Жанры'}  # Название страницы.
 
 
 class ProductListView(ListView):
     """Класс для отображения страницы с играми определенного жанра."""
-    model = Product
+    model = Product  # Модель.
 
     def get_queryset(self):
-        """Возвращает отфильтрованные данные по номеру категории."""
-        queryset = super().get_queryset()
-        queryset = queryset.filter(category=self.kwargs.get('pk'))
+        """
+        Возвращает выборку товаров по номеру категории и
+        статусу публикации для отображения на странице.
+        """
+        queryset = super().get_queryset()  # Переопределяем метод.
+        queryset = queryset.filter(category=self.kwargs.get('pk'), is_published=True)
 
         return queryset
 
-    def get_context_data(self, *args, **kwargs):
-        """Возвращает игры по определенной категории, название категории."""
+    def get_context_data(self, *args, **kwargs) -> dict[str, Any]:
+        """
+        Возвращает игры по определенной категории,
+        название категории для работы в шаблоне.
+        """
         context_data = super().get_context_data(*args, **kwargs)
 
         category = Category.objects.get(pk=self.kwargs.get('pk'))
-        context_data['category'] = category
-        context_data['title'] = category
+        context_data['category'] = category  # Объект категории.
+        context_data['title'] = category  # Название страницы.
 
         return context_data
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     """Класс для создания товара."""
-    model = Product
-    form_class = ProductForm
+    model = Product  # Модель.
+    form_class = ProductForm  # Форма.
     success_url = reverse_lazy('catalog:categories')
 
-    def form_valid(self, form):
-        self.object = form.save()
-        self.object.creator = self.request.user
-        self.object.save()
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        """
+        Возвращает формы товара и версии для
+        определенного товара для работы в шаблоне.
+        """
+        context_data = super().get_context_data(**kwargs)  # Переопределяем метод.
+        # Формируем набор форм, которые должен заполнить пользователь.
+        VersionFormset = inlineformset_factory(
+            Product, Version,
+            form=VersionForm,
+            extra=1)
 
-        return super().form_valid(form)
-
-
-class ProductUpdateView(UpdateView):
-    """Класс для создания товора."""
-    model = Product
-    form_class = ProductForm
-    success_url = reverse_lazy('catalog:categories')
-
-    def get_context_data(self, **kwargs):
-        context_data = super().get_context_data(**kwargs)
-        VersionFormset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
         if self.request.method == 'POST':
             context_data['formset'] = VersionFormset(self.request.POST, instance=self.object)
         else:
             context_data['formset'] = VersionFormset(instance=self.object)
+
         return context_data
 
     def form_valid(self, form):
-        formset = self.get_context_data()['formset']
-        self.object = form.save()
-        if formset.is_valid():
-            formset.instance = self.object
-            formset.save()
+        """Валидация формы создания товара и версий."""
+        context_data = self.get_context_data()  # Записываем контекстные данные.
+        formset = context_data['formset']  # Извлекаем формсет из контекстных данных.
+        # Запускаем блок кода в контексте транзакции бд.
+        # (Либо весь блок выполнится, либо ни одно из действий не выполнится.)
+        with transaction.atomic():
+            if form.is_valid():
+                self.object = form.save()
+                self.object.creator = self.request.user
+                if formset.is_valid():
+                    formset.instance = self.object
+                    formset.save()
 
         return super().form_valid(form)
 
 
-class ProductDetailView(DetailView):
+class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    """Класс для создания товара."""
+    model = Product
+    form_class = ProductForm
+    permission_required = ('catalog.cancel_published_status',
+                           'catalog.change_category',
+                           'catalog.change_description',)
+    success_url = reverse_lazy('catalog:categories')
+
+    def has_permission(self):
+        """Настройка способа проверки разрешений."""
+        perms = self.get_permission_required()
+        product = self.get_object()
+        user = self.request.user
+        return user == product.creator or user.has_perms(perms)
+
+    def get_form(self):
+        """Настройка формы с правами."""
+        # Переопределяем метод для получения базовой формы.
+        form = super().get_form()
+        # Проводим проверку по полям которые разрешены для
+        # изменения пользователю (не является создателем товара).
+        if self.request.user != form.instance.creator:
+            enabled_fields = set()  # Создаем множество для разрешенных полей.
+            # Добавляем поля в множество, если пользователь имеет на них права.
+            if self.request.user.has_perm('catalog.change_category'):
+                enabled_fields.add('category')
+            if self.request.user.has_perm('catalog.change_description'):
+                enabled_fields.add('description')
+            if self.request.user.has_perm('catalog.cancel_published_status'):
+                enabled_fields.add('is_published')
+            # Выбираем поля, которые не вошли в множество и отключаем редактирование этих полей.
+            for field_name in enabled_fields.symmetric_difference(form.fields):
+                form.fields[field_name].disabled = True
+
+        return form  # Возвращаем измененную форму.
+
+    def get_context_data(self, **kwargs):
+        """
+        Возвращает формы товара и версии для
+        определенного товара для работы в шаблоне.
+        """
+        context_data = super().get_context_data(**kwargs)  # Переопределяем метод.
+        # Формируем набор форм, которые должен заполнить пользователь.
+        VersionFormset = inlineformset_factory(
+            Product, Version,
+            form=VersionForm,
+            extra=1)
+
+        if self.request.method == 'POST':
+            context_data['formset'] = VersionFormset(self.request.POST, instance=self.object)
+        else:
+            context_data['formset'] = VersionFormset(instance=self.object)
+
+        return context_data
+
+    def form_valid(self, form):
+        """Валидация формы создания товара и версий."""
+        context_data = self.get_context_data()  # Записываем контекстные данные.
+        formset = context_data['formset']  # Извлекаем формсет из контекстных данных.
+        # Запускаем блок кода в контексте транзакции бд.
+        # (Либо весь блок выполнится, либо ни одно из действий не выполнится.)
+        with transaction.atomic():
+            if formset.is_valid():
+                formset.instance = self.object
+                formset.save()
+
+        return super().form_valid(form)
+
+
+class ProductDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     """Класс для отображения определенной игры."""
     model = Product
+    permission_required = 'catalog.view_product'
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     """Класс для удаления определенной блоговой записи."""
-    model = Blog
+    model = Product
+    permission_required = 'catalog.delete_product'
     success_url = reverse_lazy('catalog:categories')
 
 
-class BlogCreateView(CreateView):
+class BlogCreateView(LoginRequiredMixin, CreateView):
     """Класс для создания блоговой записи."""
-    model = Blog
-    form_class = BlogForm
+    model = Blog  # Модель.
+    form_class = BlogForm  # Форма.
     success_url = reverse_lazy('catalog:blog_list')
 
     def form_valid(self, form):
         """Проверяет валидность формы, если успешно - сохраняет ее."""
-        if form.is_valid():
-            new_blog = form.save()
-            new_blog.slug = slugify(new_blog.title)
-            new_blog.save()
+        # Запускаем блок кода в контексте транзакции бд.
+        # (Либо весь блок выполнится, либо ни одно из действий не выполнится.)
+        with transaction.atomic():
+            if form.is_valid():
+                new_blog = form.save()
+                new_blog.creator = self.request.user
+                new_blog.slug = slugify(new_blog.title)
+                new_blog.save()
 
         return super().form_valid(form)
 
 
-class BlogListView(ListView):
+class BlogListView(LoginRequiredMixin, ListView):
     """Класс для отображения блога."""
     model = Blog
     extra_context = {'title': 'Наш блог'}  # Название страницы.
@@ -160,7 +249,7 @@ class BlogListView(ListView):
         return queryset
 
 
-class BlogDetailView(DetailView):
+class BlogDetailView(LoginRequiredMixin, DetailView):
     """Класс для отображения определенной записи."""
     model = Blog
 
@@ -173,10 +262,11 @@ class BlogDetailView(DetailView):
         return self.object
 
 
-class BlogUpdateView(UpdateView):
+class BlogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     """Класс для изменения определенной блоговой записи."""
     model = Blog
     form_class = BlogForm
+    permission_required = 'catalog.change_blog'
 
     def form_valid(self, form):
         """Проверяет валидность формы, если успешно - сохраняет ее."""
@@ -192,7 +282,8 @@ class BlogUpdateView(UpdateView):
         return reverse('catalog:blog_detail', args=[self.kwargs.get('pk')])
 
 
-class BlogDeleteView(DeleteView):
+class BlogDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     """Класс для удаления определенной блоговой записи."""
     model = Blog
+    permission_required = 'catalog.delete_blog'
     success_url = reverse_lazy('catalog:blog_list')
