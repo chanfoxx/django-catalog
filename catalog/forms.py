@@ -6,7 +6,7 @@ class ProductForm(forms.ModelForm):
     """Форма для товара."""
     class Meta:
         model = Product
-        exclude = ('date_add', 'creator',)
+        exclude = ('creator',)
 
     def clean_title(self):
         """Валидация названия товара."""
@@ -48,4 +48,4 @@ class BlogForm(forms.ModelForm):
     """Форма для блоговых записей."""
     class Meta:
         model = Blog
-        exclude = ('slug', 'creation_date', 'view_count',)
+        exclude = ('slug', 'view_count', 'creator',)

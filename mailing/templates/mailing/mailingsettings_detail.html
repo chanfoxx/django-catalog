@@ -1,0 +1,35 @@
+{% extends "catalog/base.html" %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center"></div>
+<div class="container">
+    <div class="row text-start">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Рассылка</h4>
+                </div>
+                <div class="card-body">
+                    <p>
+                        Начало рассылки: {{ object.start_time }}
+                    </p>
+                    <p>
+                        Конец рассылки: {{ object.end_time }}
+                    </p>
+                    <p>
+                        Период: {{ object.frequency }}
+                    </p>
+                    <p>
+                        Статус: {{ object.status }}
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-md" style="background-color: #2F4F4F;"
+                       href="{% url 'mailing:mailing_list' %}">
+                        Назад
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
