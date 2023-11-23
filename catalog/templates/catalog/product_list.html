@@ -23,12 +23,14 @@
                      src="{{ object.image|mediapath }}" alt="Photo">
             </div>
             <div class="card-footer mb-3 ml-3" style="padding-left: 20px;">
+                {% if perms.catalog.cancel_published_status and perms.catalog.change_description and perms.catalog.change_category or user.is_authenticated and user == object.creator %}
                 <a class="btn btn-sm" style="background-color: #2F4F4F;"
                    href="{% url 'catalog:product' object.pk %}"
                    role="button">Просмотреть</a>
-                {% if user.is_authenticated %}
                 <a class="btn btn-sm btn-secondary" href="{% url 'catalog:update_product' object.pk %}"
                    type="button">Изменить</a>
+                {% endif %}
+                {% if user.is_authenticated and user == object.creator or user.is_superuser %}
                 <a class="btn btn-sm" style="background-color: #B22222"
                    href="{% url 'catalog:delete_product' object.pk %}"
                    type="button">Удалить</a>
