@@ -24,6 +24,7 @@
                 <div class="card-footer"></div>
             </div>
         </div>
+        {% if user.is_superuser or user == object.creator %}
         <div class="col-lg-5 mx-4" style="padding-top: 30px; padding-bottom: 10px;">
             <div class="card">
                 <div class="card-header">
@@ -44,6 +45,7 @@
                 <div class="card-footer"></div>
             </div>
         </div>
+        {% endif %}
     </form>
 </div>
 {% endblock %}

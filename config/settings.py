@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'users',
+    'mailing',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -157,18 +159,30 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
+# Host settings
+
+HOST = os.getenv('HOST', default='http://localhost:8000')
 
 # Users settings
 
 AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/users/'
 
 # User email settings
 load_dotenv()
 
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = 'cchloexx@yandex.ru'
+EMAIL_HOST_USER = os.getenv('EMAIL_APP')
 EMAIL_HOST_PASSWORD = os.getenv('APP_PASSWORD')
 EMAIL_USE_SSL = True
+
+# Crontab settings (каждые 5 минут)
+
+CRONJOBS = [
+    ('*/1 * * * *', 'mailing.cron.my_scheduled_job'),
+    # ('*/5 * * * *', 'myapp.cron.other_scheduled_job', ['arg1', 'arg2'], {'verbose': 0}),
+    # ('0   4 * * *', 'django.core.management.call_command', ['clearsessions']),
+]

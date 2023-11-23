@@ -15,6 +15,7 @@ class Command(BaseCommand):
             last_name='Admin',
             is_superuser=True,
             is_staff=True,
+            is_active=True,
         )
 
         user.set_password(email_admin)

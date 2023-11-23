@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView as BaseLoginView
 from django.contrib.auth.views import LogoutView as BaseLogoutView
@@ -80,11 +81,12 @@ class RegisterView(CreateView):
         # Сохраняем нового пользователя и токен в бд.
         EmailVerification.objects.create(user=new_user, token=token)
 
-        verification_url = f"http://localhost:8000/users/email_verify/{token}/"
+        verification_url = reverse("users:email_verify", args=[token])
         # Отправляем ссылку на почту пользователю для подтверждения.
         send_mail(
             subject='Подтверждение почты SkyStore',
-            message=f'Пожалуйста, перейдите по ссылке для подтверждения почты: {verification_url}',
+            message=f'Пожалуйста, перейдите по ссылке для подтверждения почты: '
+                    f'{settings.HOST}{verification_url}',
             from_email=settings.EMAIL_HOST_USER,
             recipient_list=[new_user.email]
         )

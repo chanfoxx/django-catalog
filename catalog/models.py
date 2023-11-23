@@ -15,6 +15,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     date_add = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
+    is_published = models.BooleanField(default=False, verbose_name='Опубликовано')
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
                                 **NULLABLE, verbose_name='Продавец')
 
@@ -30,6 +31,12 @@ class Product(models.Model):
         """Метаданные для модели товара."""
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
+
+        permissions = [
+            ('cancel_published_status', 'Может отменять публикацию товара'),
+            ('change_description', 'Может менять описание товара'),
+            ('change_category', 'Может менять категорию товара'),
+        ]
 
 
 class Category(models.Model):
@@ -50,10 +57,10 @@ class Category(models.Model):
 
 class Contact(models.Model):
     """Модель контактных данных."""
-    name = models.CharField(max_length=100)
-    phone = models.CharField(max_length=50)
-    email = models.EmailField(max_length=100)
-    message = models.TextField()
+    name = models.CharField(max_length=100, verbose_name='Имя')
+    phone = models.CharField(max_length=50, verbose_name='Номер телефона')
+    email = models.EmailField(max_length=100, verbose_name='E-mail')
+    message = models.TextField(verbose_name='Сообщение')
 
     def __str__(self) -> str:
         """Возвращает строковое представление о классе контактных данных."""
@@ -91,6 +98,8 @@ class Blog(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
     view_count = models.IntegerField(default=0, verbose_name='Просмотры')
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
+                                **NULLABLE, verbose_name='Автор')
 
     def __str__(self):
         return f'{self.title}'
