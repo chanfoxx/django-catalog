@@ -15,18 +15,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+from catalog.apps import CatalogConfig
+from django.views.decorators.cache import cache_page
 from catalog.views import (MainTemplateView, ContactTemplateView, CategoryListView,
                            ProductListView, ProductDetailView, BlogListView,
                            BlogCreateView, BlogDetailView, BlogUpdateView, BlogDeleteView,
                            ProductCreateView, ProductUpdateView, ProductDeleteView)
-from catalog.apps import CatalogConfig
 
 
 app_name = CatalogConfig.name
 
 
 urlpatterns = [
-    path('', MainTemplateView.as_view(), name='main'),
+    path('', cache_page(60)(MainTemplateView.as_view()), name='main'),
 
     path('contacts/', ContactTemplateView.as_view(), name='contact'),
 
