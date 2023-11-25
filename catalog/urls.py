@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.urls import path
 from catalog.apps import CatalogConfig
-from django.views.decorators.cache import cache_page
+from django.views.decorators.cache import cache_page, never_cache
 from catalog.views import (MainTemplateView, ContactTemplateView, CategoryListView,
                            ProductListView, ProductDetailView, BlogListView,
                            BlogCreateView, BlogDetailView, BlogUpdateView, BlogDeleteView,
@@ -27,21 +27,21 @@ app_name = CatalogConfig.name
 
 
 urlpatterns = [
-    path('', cache_page(60)(MainTemplateView.as_view()), name='main'),
+    path('', MainTemplateView.as_view(), name='main'),
 
     path('contacts/', ContactTemplateView.as_view(), name='contact'),
 
     path('categories/', CategoryListView.as_view(), name='categories'),
 
     path('categories/<int:pk>/', ProductListView.as_view(), name='goods'),
-    path('create/', ProductCreateView.as_view(), name='create_product'),
-    path('products/<int:pk>/edit/', ProductUpdateView.as_view(), name='update_product'),
-    path('products/<int:pk>/', ProductDetailView.as_view(), name='product'),
+    path('create/', never_cache(ProductCreateView.as_view()), name='create_product'),
+    path('products/<int:pk>/edit/', never_cache(ProductUpdateView.as_view()), name='update_product'),
+    path('products/<int:pk>/', cache_page(60)(ProductDetailView.as_view()), name='product'),
     path('products/<int:pk>/delete/', ProductDeleteView.as_view(), name='delete_product'),
 
     path('blog/', BlogListView.as_view(), name='blog_list'),
-    path('blog/create/', BlogCreateView.as_view(), name='blog_create'),
+    path('blog/create/', never_cache(BlogCreateView.as_view()), name='blog_create'),
     path('blog/<slug:slug>/', BlogDetailView.as_view(), name='blog_detail'),
-    path('blog/edit/<int:pk>/', BlogUpdateView.as_view(), name='blog_update'),
+    path('blog/edit/<int:pk>/', never_cache(BlogUpdateView.as_view()), name='blog_update'),
     path('blog/delete/<int:pk>/', BlogDeleteView.as_view(), name='blog_delete'),
 ]
