@@ -10,6 +10,8 @@ from catalog.models import Product, Category, Contact, Blog, Version
 from django.views.generic import (ListView, DetailView, TemplateView, DeleteView,
                                   CreateView, UpdateView)
 
+from catalog.services import get_category_cache, get_categories_cache
+
 
 class MainTemplateView(TemplateView):
     """Класс для отображения главной страницы."""
@@ -60,7 +62,19 @@ class ContactTemplateView(TemplateView):
 class CategoryListView(ListView):
     """Класс для отображения страницы с жанрами игр."""
     model = Category  # Модель.
-    extra_context = {'title': 'Жанры'}  # Название страницы.
+
+    def get_context_data(self, *args, **kwargs) -> dict[str, Any]:
+        """
+        Возвращает игры по определенной категории,
+        название категории для работы в шаблоне.
+        """
+        context_data = super().get_context_data(*args, **kwargs)
+
+        category_list = get_categories_cache()
+        context_data['category_list'] = category_list  # Все категории.
+        context_data['title'] = 'Жанры'  # Название страницы.
+
+        return context_data
 
 
 class ProductListView(ListView):
@@ -84,7 +98,7 @@ class ProductListView(ListView):
         """
         context_data = super().get_context_data(*args, **kwargs)
 
-        category = Category.objects.get(pk=self.kwargs.get('pk'))
+        category = get_category_cache(pk=self.kwargs.get('pk'))
         context_data['category'] = category  # Объект категории.
         context_data['title'] = category  # Название страницы.
 

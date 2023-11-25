@@ -15,13 +15,12 @@ import os
 from dotenv import load_dotenv
 
 
-# Password for postgresql database.
-PASSWORD = os.getenv('SQL_PASS')
-
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Paths for load_dotenv.
+dot_env = os.path.join(BASE_DIR, '.env')
+load_dotenv(dotenv_path=dot_env)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -30,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-05eqb%+@v5!9ybp7_^22#i%d_%mju(wq^e)*py=rdc(_u4ey6-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -54,6 +53,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -61,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -86,14 +87,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-load_dotenv()
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'django_catalog_project',
-        'USER': 'postgres',
-        'PASSWORD': 'PASSWORD',
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('SQL_USER'),
+        'PASSWORD': os.getenv('SQL_PASS'),
     }
 }
 
@@ -171,7 +171,6 @@ LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/users/'
 
 # User email settings
-load_dotenv()
 
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
@@ -179,10 +178,21 @@ EMAIL_HOST_USER = os.getenv('EMAIL_APP')
 EMAIL_HOST_PASSWORD = os.getenv('APP_PASSWORD')
 EMAIL_USE_SSL = True
 
-# Crontab settings (каждые 5 минут)
+# Crontab settings
 
 CRONJOBS = [
     ('*/1 * * * *', 'mailing.cron.my_scheduled_job'),
     # ('*/5 * * * *', 'myapp.cron.other_scheduled_job', ['arg1', 'arg2'], {'verbose': 0}),
     # ('0   4 * * *', 'django.core.management.call_command', ['clearsessions']),
 ]
+
+# Cash register
+CACHE_ENABLED = os.getenv('CACHE_ENABLED')
+
+if CACHE_ENABLED:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": os.getenv('CACHE_LOCATION'),
+        }
+    }

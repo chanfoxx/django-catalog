@@ -6,3 +6,4 @@ python-dotenv
 pytils
 crispy-bootstrap5
 django-crontab
+redis
