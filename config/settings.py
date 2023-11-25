@@ -26,10 +26,10 @@ load_dotenv(dotenv_path=dot_env)
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY_DJANGO')
+SECRET_KEY = 'django-insecure-05eqb%+@v5!9ybp7_^22#i%d_%mju(wq^e)*py=rdc(_u4ey6-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -53,6 +53,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -60,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -85,15 +87,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-# Password for postgresql database.
-PASSWORD = os.getenv('SQL_PASS')
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'django_catalog_project',
-        'USER': 'postgres',
-        'PASSWORD': 'PASSWORD',
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('SQL_USER'),
+        'PASSWORD': os.getenv('SQL_PASS'),
     }
 }
 
@@ -178,7 +178,7 @@ EMAIL_HOST_USER = os.getenv('EMAIL_APP')
 EMAIL_HOST_PASSWORD = os.getenv('APP_PASSWORD')
 EMAIL_USE_SSL = True
 
-# Crontab settings (каждые 5 минут)
+# Crontab settings
 
 CRONJOBS = [
     ('*/1 * * * *', 'mailing.cron.my_scheduled_job'),
@@ -193,6 +193,6 @@ if CACHE_ENABLED:
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
-            "LOCATION": "redis://127.0.0.1:6379",
+            "LOCATION": os.getenv('CACHE_LOCATION'),
         }
     }
