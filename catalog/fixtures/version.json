@@ -228,5 +228,25 @@
       "title": "Изменена стоимость.",
       "is_active": true
     }
+  },
+  {
+    "model": "catalog.version",
+    "pk": 24,
+    "fields": {
+      "product": 18,
+      "version_number": "1.0",
+      "title": "Добавлена стоимость",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.version",
+    "pk": 27,
+    "fields": {
+      "product": 19,
+      "version_number": "1.0",
+      "title": "Добавлена стоимость",
+      "is_active": true
+    }
   }
 ]
