@@ -1,9 +1,6 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView as BaseLoginView
 from django.contrib.auth.views import LogoutView as BaseLogoutView
-from django.conf import settings
-from django.core.mail import send_mail
 from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from django.utils.crypto import get_random_string
@@ -11,6 +8,7 @@ from django.views import View
 from django.views.generic import CreateView, UpdateView, TemplateView
 from users.forms import UserRegisterForm, UserProfileForm
 from users.models import User, EmailVerification
+from users.services import send_new_password, send_confirm_email
 
 
 class LoginView(BaseLoginView):
@@ -30,17 +28,10 @@ class PasswordTemplateView(TemplateView):
         email - e-mail адрес пользователя,
         """
         email = request.POST.get('email')
-
         # Генерируем новый пароль.
         new_password = User.objects.make_random_password()
         # Отправляем новый пароль на указанную почту пользователем.
-        send_mail(
-            subject='Вы сменили пароль.',
-            message=f'Ваш новый пароль: {new_password}',
-            from_email=settings.EMAIL_HOST_USER,
-            recipient_list=[email]
-        )
-
+        send_new_password(new_password, email)
         # Получаем нужного пользователя по e-mail и сохраняем новый пароль.
         user = User.objects.get(email=email)
         user.set_password(new_password)
@@ -75,7 +66,6 @@ class RegisterView(CreateView):
         new_user = form.save()
         new_user.is_active = False
         new_user.save()
-
         # Генерируем токен.
         token = get_random_string(length=32)
         # Сохраняем нового пользователя и токен в бд.
@@ -83,13 +73,8 @@ class RegisterView(CreateView):
 
         verification_url = reverse("users:email_verify", args=[token])
         # Отправляем ссылку на почту пользователю для подтверждения.
-        send_mail(
-            subject='Подтверждение почты SkyStore',
-            message=f'Пожалуйста, перейдите по ссылке для подтверждения почты: '
-                    f'{settings.HOST}{verification_url}',
-            from_email=settings.EMAIL_HOST_USER,
-            recipient_list=[new_user.email]
-        )
+        send_confirm_email(verification_url, new_user)
+
         return super().form_valid(form)
 
 
