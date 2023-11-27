@@ -14,7 +14,6 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -32,7 +31,6 @@ SECRET_KEY = 'django-insecure-05eqb%+@v5!9ybp7_^22#i%d_%mju(wq^e)*py=rdc(_u4ey6-
 DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -84,7 +82,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -96,7 +93,6 @@ DATABASES = {
         'PASSWORD': os.getenv('SQL_PASS'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -116,18 +112,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -140,7 +134,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'catalog', 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -150,7 +143,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CATEGORY_FILE = os.path.join(BASE_DIR, 'fixtures', 'category.json')
 PRODUCT_FILE = os.path.join(BASE_DIR, 'fixtures', 'product.json')
-
 
 # Crispy Forms - Bootstrap 5
 # https://github.com/django-crispy-forms/crispy-bootstrap5
@@ -179,11 +171,10 @@ EMAIL_HOST_PASSWORD = os.getenv('APP_PASSWORD')
 EMAIL_USE_SSL = True
 
 # Crontab settings
+CRON_LOG = os.path.join(BASE_DIR, 'tmp', 'scheduled_job.log')
 
 CRONJOBS = [
-    ('*/1 * * * *', 'mailing.cron.my_scheduled_job'),
-    # ('*/5 * * * *', 'myapp.cron.other_scheduled_job', ['arg1', 'arg2'], {'verbose': 0}),
-    # ('0   4 * * *', 'django.core.management.call_command', ['clearsessions']),
+    ('*/1 * * * *', 'mailing.cron.my_scheduled_job', '>>' + CRON_LOG),
 ]
 
 # Cash register
