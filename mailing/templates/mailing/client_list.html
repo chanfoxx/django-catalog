@@ -1,0 +1,24 @@
+{% extends 'catalog/base.html' %}
+{% load static %}
+{% block content %}
+<div class="col-12 mx-5 px-3 py-3">
+    <a class="btn btn-md" type="button" href="{% url 'mailing:mailing_list' %}">
+        <img src="{% static 'catalog/svg/arrow-left.svg' %}" alt="Icon"></a>
+</div>
+{% for object in object_list %}
+<div class="container">
+    <div class="row text-start">
+        <div class="col-lg-5 col-md-6 col-sm-12">
+            <div class="card mb-4 box-shadow">
+                <div class="card-body mx-1" style="padding-top: 1px; padding-right: 1px;">
+                    {% include 'mailing/includes/inc_client.html' %}
+                    <div class="card-title fs-6">
+                        {{ object }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,3 +1,5 @@
+from typing import Optional
+
 from django.db import models
 from django.utils import timezone
 
@@ -69,6 +71,10 @@ class MailingSettings(models.Model):
     client = models.ManyToManyField(Client, verbose_name='Получатель')
     message = models.ForeignKey(MailingMessage, on_delete=models.CASCADE, verbose_name='Контент')
 
+    @property
+    def mailing_logs(self) -> Optional['MailingLogs']:
+        return self.mailinglogs_set.get()
+
     def __str__(self):
         """Возвращает строковое представление о классе настроек рассылки."""
         return f'{self.start_time}:{self.end_time} - {self.frequency}'
@@ -100,7 +106,7 @@ class MailingLogs(models.Model):
 
     def __str__(self):
         """Возвращает строковое представление о классе логов рассылки."""
-        return f'{self.date}: {self.attempt_status}'
+        return f'{self.date}: {self.attempt_status}, {self.mail_server_response}'
 
     class Meta:
         """Метаданные для модели логов рассылки."""
