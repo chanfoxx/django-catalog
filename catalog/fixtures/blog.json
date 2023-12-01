@@ -9,7 +9,22 @@
       "preview": "images/blog/bunny_ray.png",
       "creation_date": "2023-11-05T18:02:55.751Z",
       "is_published": true,
-      "view_count": 17
+      "view_count": 49,
+      "creator": 55
+    }
+  },
+  {
+    "model": "catalog.blog",
+    "pk": 5,
+    "fields": {
+      "title": "Самые ожидаемые игры 2024",
+      "slug": "samyie-ozhidaemyie-igryi-2024",
+      "description": "2024 год обещает принести множество захватывающих игр для ПК.\r\nОбъем и качество обещают поразить даже самых требовательных геймеров.\r\nПодготовьтесь окунуться в увлекательные приключения и испытать острые ощущения в игровом мире!",
+      "preview": "images/blog/IMG_0074.jpeg",
+      "creation_date": "2023-11-30T10:23:36.304Z",
+      "is_published": true,
+      "view_count": 152,
+      "creator": 53
     }
   }
 ]

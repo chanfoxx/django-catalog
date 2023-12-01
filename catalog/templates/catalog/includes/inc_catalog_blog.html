@@ -1,0 +1,24 @@
+{% load static %}
+<!-- Кнопки для блоговой записи (смотреть, изменить, удалить) -->
+<div class="d-flex justify-content-end position-relative">
+    <div class="btn-group" role="group">
+        <button type="button" class="btn dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="{% static 'catalog/svg/three-dots.svg' %}" alt="Icon">
+        </button>
+        <ul class="dropdown-menu">
+            {% if user.is_authenticated %}
+            <li><a class="dropdown-item" href="{% url 'catalog:blog_detail' slug=object.slug %}">
+                Просмотреть запись</a>
+            </li>
+            {% endif %}
+            {% if user.is_authenticated and user == object.creator or user.is_superuser %}
+            <li><a class="dropdown-item" href="{% url 'catalog:blog_update' object.pk %}">
+                Редактировать запись</a>
+            </li>
+            <li><a class="dropdown-item" href="{% url 'catalog:blog_delete' object.pk %}">
+                Удалить запись</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

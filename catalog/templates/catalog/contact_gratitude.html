@@ -1,0 +1,21 @@
+{% extends 'catalog/base.html' %}
+{% load static %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-6">Доброго времени суток!</h1>
+</div>
+<div class="container">
+    <div class="row text-center">
+        <div class="col-lg-12">
+            <div class="card mb-4 box-shadow border border-success">
+                <div class="card-body lh-1">
+                    <div class="d-grid gap-2">
+                        <p>Благодарим за Ваш запрос.</p>
+                        <p>Мы свяжемся с Вами в ближайшее время.</p>
+                        <img class="center" src="{% static 'catalog/svg/emoji-wink-fill.svg' %}" alt="Icon">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,5 +1,5 @@
 from django import forms
-from catalog.models import Product, Blog, Version
+from catalog.models import Product, Blog, Version, Contact
 
 
 class ProductForm(forms.ModelForm):
@@ -42,6 +42,20 @@ class VersionForm(forms.ModelForm):
     class Meta:
         model = Version
         fields = '__all__'
+
+
+class ContactForm(forms.ModelForm):
+    """Форма обратной связи."""
+    class Meta:
+        model = Contact
+        fields = '__all__'
+
+
+class ModeratorForm(forms.ModelForm):
+    """Форма для модератора."""
+    class Meta:
+        model = Product
+        fields = ('description', 'category', 'is_published',)
 
 
 class BlogForm(forms.ModelForm):

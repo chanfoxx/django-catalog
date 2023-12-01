@@ -6,20 +6,28 @@
         <div class="col-lg-6 col-md-6 col-sm-12">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
+                    {% include 'mailing/includes/inc_mailing.html' %}
                     <h4 class="my-0 font-weight-normal">Рассылка</h4>
                 </div>
                 <div class="card-body">
                     <p>
-                        Начало рассылки: {{ object.start_time }}
+                        Начало: {{ object.start_time }}
                     </p>
+                    <hr>
                     <p>
-                        Конец рассылки: {{ object.end_time }}
+                        Конец: {{ object.end_time }}
                     </p>
+                    <hr>
                     <p>
-                        Период: {{ object.frequency }}
+                        Период: {{ object.get_frequency_display }}.
                     </p>
+                    <hr>
                     <p>
-                        Статус: {{ object.status }}
+                        Статус: {{ object.get_status_display }}.
+                    </p>
+                    <hr>
+                    <p>
+                        Контент: "{{ object.message }}".
                     </p>
                 </div>
                 <div class="card-footer">
