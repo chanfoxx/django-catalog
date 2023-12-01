@@ -32,8 +32,10 @@
             </div>
             <div class="bg-body-tertiary shadow-sm mx-auto">
                 <div style="height: 200px; overflow: hidden;">
-                <img src="{% mediapath object.image %}" class="img-thumbnail" width="350" alt="Image">
-            </div>
+                    <a href="{% url 'catalog:product' object.pk %}">
+                        <img src="{% mediapath object.image %}" class="img-thumbnail" width="350" alt="Image">
+                    </a>
+                </div>
             </div>
         </div>
         {% if forloop.counter|divisibleby:2 %}

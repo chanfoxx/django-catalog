@@ -3,6 +3,7 @@
 <div class="row mb-2 mt-5 mx-5 px-2">
     <div class="col-12">
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            {% include 'catalog/includes/inc_catalog_product_detail.html' %}
             <div class="col p-4 d-flex flex-column position-static">
                 <strong class="d-inline-block mb-2 text-emphasis">{{ object|title }}</strong>
                 <h4 class="mb-0">{{ object.title }}</h4>

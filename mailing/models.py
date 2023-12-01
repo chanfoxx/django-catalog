@@ -69,25 +69,6 @@ class MailingSettings(models.Model):
     client = models.ManyToManyField(Client, verbose_name='Получатель')
     message = models.ForeignKey(MailingMessage, on_delete=models.CASCADE, verbose_name='Контент')
 
-    # @property
-    # def mailing_status(self):
-    #     """
-    #     Выставляет нужное значение для поля status
-    #     в зависимости от времени.
-    #     """
-    #     current_time = timezone.now()
-    #     if current_time < self.start_time:
-    #         return self.CREATED
-    #     elif self.start_time <= current_time <= self.end_time:
-    #         return self.LAUNCHED
-    #     else:
-    #         return self.COMPLETED
-    #
-    # def save(self, *args, **kwargs):
-    #     """Сохраняет значение поля status."""
-    #     self.status = self.mailing_status
-    #     super().save(*args, **kwargs)
-
     def __str__(self):
         """Возвращает строковое представление о классе настроек рассылки."""
         return f'{self.start_time}:{self.end_time} - {self.frequency}'
@@ -103,16 +84,14 @@ class MailingLogs(models.Model):
     # Выбор для поля "attempt_status".
     SUCCESS = 1
     FAILURE = 2
-    IN_PROGRESS = 3
 
     ATTEMPT_STATUS_CHOICES = [
         (SUCCESS, 'Успешно'),
         (FAILURE, 'Неудачно'),
-        (IN_PROGRESS, 'В процессе'),
     ]
 
     date = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время последней попытки', **NULLABLE)
-    attempt_status = models.IntegerField(choices=ATTEMPT_STATUS_CHOICES, default=IN_PROGRESS,
+    attempt_status = models.IntegerField(choices=ATTEMPT_STATUS_CHOICES,
                                          verbose_name='Статус попытки', **NULLABLE)
     mail_server_response = models.CharField(verbose_name='Ответ почтового сервера', **NULLABLE)
 

@@ -1,46 +1,75 @@
 {% extends 'catalog/base.html' %}
+{% load static %}
 {% block content %}
-<div class="pricing-header px-3 py-3 pt-md-3 pb-md-4 mx-auto text-center">
-    {% if user.is_authenticated %}
-    <a class="btn btn-lg col-6 border" style="background-image: linear-gradient(to right, #2F4F4F, #708090);"
-       href="{% url 'catalog:blog_create' %}">
-        Добавить запись в блог
-    </a>
-    {% endif %}
-</div>
-{% for object in object_list %}
-<div class="container">
-    <div class="row text-start">
-        <div class="col-lg-8 col-md-6 col-sm-12">
-            <div class="card mb-4 box-shadow">
-                <div class="card-body">
-                    <img src="/media/{{ object.preview }}"
-                         class="img-fluid img-thumbnail thumbnail-box-shadow mb-3" alt="Image"
-                    >
-                    <div class="card-title fs-6">
-                        {{ object }} &hearts;
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                            {% if user.is_authenticated %}
-                            <a class="btn btn-sm" style="background-color: #2F4F4F;"
-                               href="{% url 'catalog:blog_detail' slug=object.slug %}"
-                               type="button">Просмотр</a>
-                            {% endif %}
-                            {% if user.is_authenticated and user == object.creator or user.is_superuser %}
-                            <a class="btn btn-sm btn-secondary" href="{% url 'catalog:blog_update' object.pk %}"
-                               type="button">Изменить</a>
-                            <a class="btn btn-sm" style="background-color: #B22222;"
-                               href="{% url 'catalog:blog_delete' object.pk %}"
-                               type="button">Удалить</a>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
+<div class="row g-5">
+    <div class="col-md-8" style="padding-top: 20px; padding-left: 70px;">
+        <h3 class="pb-4 mb-1 fst-italic border-bottom">
+            Наш блог о новинках
+        </h3>
+        {% for object in object_list %}
+        {% include 'catalog/includes/inc_catalog_blog.html' %}
+        <article class="blog-post">
+            <a class="link-underline-dark" href="{% url 'catalog:blog_detail' slug=object.slug %}">
+            <h2 class="display-5 link-body-emphasis mb-1">{{ object.title }}</h2></a>
+            <p class="blog-post-meta">{{ object.creation_date }}
+                <img src="{% static 'catalog/svg/person-fill-check.svg' %}" alt="Icon">
+                <a class="link-secondary" href="#">{{ object.creator.first_name }}</a>
+            </p>
+            <p><img src="/media/{{ object.preview }}"
+                    class="img-fluid img-thumbnail thumbnail-box-shadow mb-3" alt="Image"></p>
+            <p>{{ object.description }}</p>
+            <hr>
+            <div class="col mb-3">
+                <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+                <label class="btn btn-outline-danger mb-2" for="btn-check-outlined">
+                    <img src="{% static 'catalog/svg/heart.svg' %}" alt="Icon"></label><br>
+            </div>
+            {% endfor %}
+        </article>
+    </div>
+    <div class="col-md-4" style="padding-top: 20px;">
+        <!--Создать запись-->
+        {% if user.is_authenticated %}
+        <div class="mb-3" style="text-align: center;">
+            <a class="link-secondary" style="text-align: center;"
+               href="{% url 'catalog:blog_create' %}">
+                <img src="{% static 'catalog/svg/plus-square.svg' %}" alt="Icon">
+            </a>
+        </div>
+        {% endif %}
+        <div class="position-sticky" style="top: 2rem;">
+            <div class="p-4 mb-3 bg-body-tertiary rounded">
+                <h4 class="fst-italic">About</h4>
+                <p class="mb-0">Здесь можно почитать наши новости.</p>
+            </div>
+            <div>
+                <h4 class="fst-italic">Список постов</h4>
+                {% for object in object_list %}
+                <ul class="list-unstyled">
+                    <li>
+                        <a class="d-flex flex-column flex-lg-row gap-3 align-items-start
+                        align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top"
+                           href="{% url 'catalog:blog_detail' slug=object.slug %}">
+                            <img src="/media/{{ object.preview }}"
+                                 class="img-fluid img-thumbnail thumbnail-box-shadow mb-3"
+                                 width="30%" height="100%" alt="Image">
+                            <div class="col-lg-8">
+                                <h6 class="mb-0">{{ object.title }}</h6>
+                                <small class="text-body-secondary">{{ object.creation_date }}</small>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                {% endfor %}
+            </div>
+            <div class="p-4">
+                <h4 class="fst-italic">Elsewhere</h4>
+                <ol class="list-unstyled">
+                    <li><a class="link-secondary" href="https://github.com/chanfoxx">GitHub</a></li>
+                    <li><a class="link-secondary" href="https://sky.pro/">SkyPro</a></li>
+                </ol>
             </div>
         </div>
     </div>
 </div>
-{% endfor %}
 {% endblock %}

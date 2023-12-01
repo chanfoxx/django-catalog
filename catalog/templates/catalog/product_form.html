@@ -1,9 +1,10 @@
 {% extends 'catalog/base.html' %}
 {% load crispy_forms_tags %}
+{% load custom_filter %}
 {% block content %}
 <div class="col-lg-12">
     <form method="post" enctype="multipart/form-data">
-        <div class="col-lg-5 mx-4" style="padding-top: 30px; padding-bottom: 10px;">
+        <div class="col-lg-6 mx-4" style="padding-top: 30px; padding-bottom: 10px;">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title text-center">
@@ -13,7 +14,7 @@
                 <div class="card-body">
                     {% csrf_token %}
                     {{ form|crispy }}
-                    <button type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-md" style="background-color: #2F4F4F;">
                         {% if object %}
                         Сохранить
                         {% else %}
@@ -21,11 +22,20 @@
                         {% endif %}
                     </button>
                 </div>
-                <div class="card-footer"></div>
+                <div class="card-footer">
+                </div>
             </div>
         </div>
-        {% if user.is_superuser or user == object.creator %}
-        <div class="col-lg-5 mx-4" style="padding-top: 30px; padding-bottom: 10px;">
+        {% if user|has_group:"Модератор" %}
+        <div class="col-lg-4 mx-4" style="padding-top: 10px; padding-bottom: 10px; padding-left: 20px;">
+            <a class="btn btn-md btn-warning"
+               href="{% url 'catalog:goods' object.category_id %}"
+               role="button">
+                Назад
+            </a>
+        </div>
+        {% else %}
+        <div class="col-lg-4 mx-4" style="padding-top: 30px; padding-bottom: 10px;">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title text-center">

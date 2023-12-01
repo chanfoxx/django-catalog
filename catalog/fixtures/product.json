@@ -9,7 +9,9 @@
       "image": "images/product/minecraft.png",
       "price": "23.99",
       "date_add": "2023-11-01T20:14:58.234Z",
-      "date_modified": "2023-11-01T20:14:58.234Z"
+      "date_modified": "2023-11-27T01:34:30.121Z",
+      "is_published": true,
+      "creator": null
     }
   },
   {
@@ -22,7 +24,9 @@
       "image": "images/product/outlast.jpg",
       "price": "2.99",
       "date_add": "2023-11-01T20:16:05.548Z",
-      "date_modified": "2023-11-09T18:23:37.578Z"
+      "date_modified": "2023-11-23T22:02:26.425Z",
+      "is_published": false,
+      "creator": null
     }
   },
   {
@@ -35,7 +39,9 @@
       "image": "images/product/dishonored.jpg",
       "price": "9.99",
       "date_add": "2023-11-01T20:17:26.379Z",
-      "date_modified": "2023-11-01T20:17:26.379Z"
+      "date_modified": "2023-11-29T03:30:40.608Z",
+      "is_published": true,
+      "creator": null
     }
   },
   {
@@ -48,7 +54,9 @@
       "image": "images/product/hogwarts_legasy.jpg",
       "price": "49.99",
       "date_add": "2023-11-01T20:18:33.049Z",
-      "date_modified": "2023-11-01T20:18:33.049Z"
+      "date_modified": "2023-11-30T09:33:42.005Z",
+      "is_published": true,
+      "creator": null
     }
   },
   {
@@ -61,7 +69,9 @@
       "image": "images/product/fear.jpeg",
       "price": "8.24",
       "date_add": "2023-11-01T20:19:33.069Z",
-      "date_modified": "2023-11-01T20:19:33.069Z"
+      "date_modified": "2023-11-29T03:08:31.656Z",
+      "is_published": true,
+      "creator": null
     }
   },
   {
@@ -74,7 +84,9 @@
       "image": "images/product/resident_evil_4.jpg",
       "price": "59.99",
       "date_add": "2023-11-01T20:20:21.271Z",
-      "date_modified": "2023-11-01T20:20:21.271Z"
+      "date_modified": "2023-11-01T20:20:21.271Z",
+      "is_published": true,
+      "creator": null
     }
   },
   {
@@ -87,7 +99,9 @@
       "image": "images/product/half_life_alyx.jpeg",
       "price": "59.99",
       "date_add": "2023-11-01T20:21:00.526Z",
-      "date_modified": "2023-11-01T20:21:00.526Z"
+      "date_modified": "2023-11-29T03:30:48.939Z",
+      "is_published": true,
+      "creator": null
     }
   },
   {
@@ -100,7 +114,9 @@
       "image": "images/product/call_of_duty_mw.png",
       "price": "19.99",
       "date_add": "2023-11-01T20:21:48.184Z",
-      "date_modified": "2023-11-11T22:18:16.755Z"
+      "date_modified": "2023-11-11T22:18:16.755Z",
+      "is_published": true,
+      "creator": null
     }
   },
   {
@@ -113,7 +129,9 @@
       "image": "images/product/little_nightmares.jpg",
       "price": "4.99",
       "date_add": "2023-11-01T20:22:24.896Z",
-      "date_modified": "2023-11-01T20:22:24.896Z"
+      "date_modified": "2023-11-28T00:04:52.559Z",
+      "is_published": true,
+      "creator": null
     }
   },
   {
@@ -126,7 +144,9 @@
       "image": "images/product/fridat_the_13th.jpg",
       "price": "4.99",
       "date_add": "2023-11-01T20:23:01.405Z",
-      "date_modified": "2023-11-01T20:23:01.405Z"
+      "date_modified": "2023-11-27T01:54:41.743Z",
+      "is_published": true,
+      "creator": null
     }
   },
   {
@@ -139,7 +159,9 @@
       "image": "images/product/batman_arkham_city.webp",
       "price": "4.99",
       "date_add": "2023-11-01T20:23:35.916Z",
-      "date_modified": "2023-11-01T20:23:35.916Z"
+      "date_modified": "2023-11-01T20:23:35.916Z",
+      "is_published": true,
+      "creator": null
     }
   },
   {
@@ -152,7 +174,9 @@
       "image": "images/product/elden_ring.jpg",
       "price": "59.99",
       "date_add": "2023-11-01T20:24:19.696Z",
-      "date_modified": "2023-11-01T20:24:19.696Z"
+      "date_modified": "2023-11-01T20:24:19.696Z",
+      "is_published": true,
+      "creator": null
     }
   },
   {
@@ -165,7 +189,9 @@
       "image": "images/product/house_flipper.jpg",
       "price": "24.99",
       "date_add": "2023-11-01T20:24:55.783Z",
-      "date_modified": "2023-11-01T20:24:55.783Z"
+      "date_modified": "2023-11-01T20:24:55.783Z",
+      "is_published": true,
+      "creator": null
     }
   },
   {
@@ -178,7 +204,9 @@
       "image": "images/product/nfs_most_wanted.jpg",
       "price": "12.99",
       "date_add": "2023-11-01T20:25:34.303Z",
-      "date_modified": "2023-11-01T20:25:34.303Z"
+      "date_modified": "2023-11-01T20:25:34.303Z",
+      "is_published": true,
+      "creator": null
     }
   },
   {
@@ -191,7 +219,9 @@
       "image": "images/product/mortal_kombat_11.jpg",
       "price": "4.99",
       "date_add": "2023-11-01T20:26:48.886Z",
-      "date_modified": "2023-11-01T20:26:48.886Z"
+      "date_modified": "2023-11-01T20:26:48.886Z",
+      "is_published": true,
+      "creator": null
     }
   },
   {
@@ -204,7 +234,9 @@
       "image": "images/product/detroit_become_human.jpg",
       "price": "15.99",
       "date_add": "2023-11-02T12:40:32.667Z",
-      "date_modified": "2023-11-02T12:40:32.667Z"
+      "date_modified": "2023-11-02T12:40:32.667Z",
+      "is_published": true,
+      "creator": null
     }
   },
   {
@@ -217,7 +249,69 @@
       "image": "images/product/silent_hill_2.jpeg",
       "price": "39.99",
       "date_add": "2023-11-07T19:08:44.378Z",
-      "date_modified": "2023-11-09T19:10:17.364Z"
+      "date_modified": "2023-11-23T22:13:24.292Z",
+      "is_published": true,
+      "creator": 55
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 18,
+    "fields": {
+      "title": "Gran Turismo 7",
+      "description": "Gran Turismo 7 — компьютерная игра в жанре гоночного симулятора, разработанная Polyphony Digital и изданная Sony Interactive Entertainment. Является восьмой основной игрой в серии игр Gran Turismo.",
+      "category": 5,
+      "image": "images/product/gran_turismo_7.webp",
+      "price": "66.39",
+      "date_add": "2023-11-14T20:42:40.987Z",
+      "date_modified": "2023-11-29T03:06:54.057Z",
+      "is_published": true,
+      "creator": null
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 19,
+    "fields": {
+      "title": "Alan Wake 2",
+      "description": "Популярный писатель из Нью-Йорка Алан Уэйк пропал без вести в 2010 году. Отправившись вместе с женой, Элис Уэйк, в отпуск на Тихоокеанский Северо-Запад, он столкнулся со сверхъестественной темной силой, которая воплотила написанный Уэйком триллер в жизнь. Он сразился с Темной Сущностью и смог изгнать ее в кошмарную Темную обитель, спрятанную под вулканическим озером рядом с городком Брайт Фоллс. Уэйк написал концовку романа и тем самым спас жену от кошмара из озера, но взамен сам остался в плену мрака.",
+      "category": 1,
+      "image": "images/product/alan_wake_2.webp",
+      "price": "49.99",
+      "date_add": "2023-11-22T23:42:49.560Z",
+      "date_modified": "2023-11-27T01:54:21.101Z",
+      "is_published": true,
+      "creator": 55
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 22,
+    "fields": {
+      "title": "Dead Space",
+      "description": "Шутер от третьего лица с элементами хоррора Dead Space Remake — полностью переработанная версия Dead Space (2008), получившая новый движок, современную графику, обновленные кат-сцены, ряд корректировок в сюжете и весь дополнительный контент.",
+      "category": 6,
+      "image": "images/product/dead_space.jpeg",
+      "price": "59.99",
+      "date_add": "2023-11-29T02:41:48.869Z",
+      "date_modified": "2023-11-29T02:57:40.025Z",
+      "is_published": true,
+      "creator": 53
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 28,
+    "fields": {
+      "title": "Forza Motorsport",
+      "description": "Forza Motorsport — гоночный симулятор, разработанный компанией Turn 10 Studios и выпущенный компанией Xbox Game Studios для Windows и Xbox Series X/S. Это тринадцатая основная игра серии Forza. Хотя это восьмая игра серии Forza Motorsport после Forza Motorsport 7, это перезапуск серии.",
+      "category": 5,
+      "image": "images/product/forza_motosport_JEvw6A8.jpeg",
+      "price": "69.99",
+      "date_add": "2023-11-29T03:05:33.397Z",
+      "date_modified": "2023-11-29T03:06:49.763Z",
+      "is_published": true,
+      "creator": 53
     }
   }
 ]

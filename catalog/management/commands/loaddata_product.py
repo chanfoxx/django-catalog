@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from config.settings import PRODUCT_FILE
-from catalog.models import Product
+from catalog.models import Product, Category
 import json
 
 
