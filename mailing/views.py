@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DetailView, UpdateView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from mailing.forms import MailingForm, MessageForm, ClientForm
 from mailing.models import MailingSettings, MailingMessage, Client
 
@@ -35,3 +35,9 @@ class ClientCreateView(CreateView):
 class MailingDetailView(DetailView):
     """Класс для отображения определенной записи."""
     model = MailingSettings
+
+
+class MailingDeleteView(DeleteView):
+    """Класс для отображения определенной записи."""
+    model = MailingSettings
+    success_url = reverse_lazy('mailing:mailing_list')
