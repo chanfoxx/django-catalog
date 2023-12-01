@@ -9,7 +9,7 @@
       "image": "images/product/minecraft.png",
       "price": "23.99",
       "date_add": "2023-11-01T20:14:58.234Z",
-      "date_modified": "2023-11-01T20:14:58.234Z",
+      "date_modified": "2023-11-27T01:34:30.121Z",
       "is_published": true,
       "creator": null
     }
@@ -39,7 +39,7 @@
       "image": "images/product/dishonored.jpg",
       "price": "9.99",
       "date_add": "2023-11-01T20:17:26.379Z",
-      "date_modified": "2023-11-22T21:05:30.065Z",
+      "date_modified": "2023-11-29T03:30:40.608Z",
       "is_published": true,
       "creator": null
     }
@@ -54,7 +54,7 @@
       "image": "images/product/hogwarts_legasy.jpg",
       "price": "49.99",
       "date_add": "2023-11-01T20:18:33.049Z",
-      "date_modified": "2023-11-01T20:18:33.049Z",
+      "date_modified": "2023-11-30T09:33:42.005Z",
       "is_published": true,
       "creator": null
     }
@@ -69,7 +69,7 @@
       "image": "images/product/fear.jpeg",
       "price": "8.24",
       "date_add": "2023-11-01T20:19:33.069Z",
-      "date_modified": "2023-11-01T20:19:33.069Z",
+      "date_modified": "2023-11-29T03:08:31.656Z",
       "is_published": true,
       "creator": null
     }
@@ -99,7 +99,7 @@
       "image": "images/product/half_life_alyx.jpeg",
       "price": "59.99",
       "date_add": "2023-11-01T20:21:00.526Z",
-      "date_modified": "2023-11-01T20:21:00.526Z",
+      "date_modified": "2023-11-29T03:30:48.939Z",
       "is_published": true,
       "creator": null
     }
@@ -129,7 +129,7 @@
       "image": "images/product/little_nightmares.jpg",
       "price": "4.99",
       "date_add": "2023-11-01T20:22:24.896Z",
-      "date_modified": "2023-11-01T20:22:24.896Z",
+      "date_modified": "2023-11-28T00:04:52.559Z",
       "is_published": true,
       "creator": null
     }
@@ -144,7 +144,7 @@
       "image": "images/product/fridat_the_13th.jpg",
       "price": "4.99",
       "date_add": "2023-11-01T20:23:01.405Z",
-      "date_modified": "2023-11-14T22:02:34.190Z",
+      "date_modified": "2023-11-27T01:54:41.743Z",
       "is_published": true,
       "creator": null
     }
@@ -264,7 +264,7 @@
       "image": "images/product/gran_turismo_7.webp",
       "price": "66.39",
       "date_add": "2023-11-14T20:42:40.987Z",
-      "date_modified": "2023-11-14T20:43:14.263Z",
+      "date_modified": "2023-11-29T03:06:54.057Z",
       "is_published": true,
       "creator": null
     }
@@ -279,9 +279,39 @@
       "image": "images/product/alan_wake_2.webp",
       "price": "49.99",
       "date_add": "2023-11-22T23:42:49.560Z",
-      "date_modified": "2023-11-23T22:25:55.713Z",
+      "date_modified": "2023-11-27T01:54:21.101Z",
       "is_published": true,
       "creator": 55
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 22,
+    "fields": {
+      "title": "Dead Space",
+      "description": "Шутер от третьего лица с элементами хоррора Dead Space Remake — полностью переработанная версия Dead Space (2008), получившая новый движок, современную графику, обновленные кат-сцены, ряд корректировок в сюжете и весь дополнительный контент.",
+      "category": 6,
+      "image": "images/product/dead_space.jpeg",
+      "price": "59.99",
+      "date_add": "2023-11-29T02:41:48.869Z",
+      "date_modified": "2023-11-29T02:57:40.025Z",
+      "is_published": true,
+      "creator": 53
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 28,
+    "fields": {
+      "title": "Forza Motorsport",
+      "description": "Forza Motorsport — гоночный симулятор, разработанный компанией Turn 10 Studios и выпущенный компанией Xbox Game Studios для Windows и Xbox Series X/S. Это тринадцатая основная игра серии Forza. Хотя это восьмая игра серии Forza Motorsport после Forza Motorsport 7, это перезапуск серии.",
+      "category": 5,
+      "image": "images/product/forza_motosport_JEvw6A8.jpeg",
+      "price": "69.99",
+      "date_add": "2023-11-29T03:05:33.397Z",
+      "date_modified": "2023-11-29T03:06:49.763Z",
+      "is_published": true,
+      "creator": 53
     }
   }
 ]
