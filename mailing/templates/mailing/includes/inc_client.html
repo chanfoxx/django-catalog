@@ -8,10 +8,10 @@
         </button>
         <ul class="dropdown-menu">
             {% if user.is_authenticated %}
-            <li><a class="dropdown-item" href="{% url 'mailing:mailing_update' object.pk %}">
-                Редактировать рассылку</a>
+            <li><a class="dropdown-item" href="{% url 'mailing:client_update' object.pk %}">
+                Редактировать</a>
             </li>
-            <li><a class="dropdown-item" href="{% url 'mailing:mailing_delete' object.pk %}">
+            <li><a class="dropdown-item" href="{% url 'mailing:client_delete' object.pk %}">
                 Удалить</a>
             </li>
             {% endif %}

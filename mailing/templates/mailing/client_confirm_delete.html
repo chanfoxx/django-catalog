@@ -8,10 +8,9 @@
                 <div class="card-header">
                     <form method="post">
                         {% csrf_token %}
-                        <p>Хотите удалить рассылку?</p>
+                        <p>Хотите удалить клиента?</p>
                         <button type="submit" class="btn btn-danger">Подтвердить</button>
-                        <a class="btn btn-warning" type="button"
-                           href="{% url 'mailing:mailing_detail' object.pk %}">Отмена</a>
+                        <a class="btn btn-warning" type="button" href="{% url 'mailing:client_list' %}">Отмена</a>
                     </form>
                 </div>
             </div>
