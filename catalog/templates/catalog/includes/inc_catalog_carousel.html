@@ -8,16 +8,14 @@
             {% if forloop.last %}
                 active
             {% endif %}">
-            <img src="{% mediapath object.image %}" class="d-block w-100" aria-hidden="true">
+            <a href="{% url 'catalog:goods' object.pk %}">
+                <img src="{% mediapath object.image %}" class="d-block w-100" aria-hidden="true"></a>
             <div class="container">
                 <div class="carousel-caption text-start text-white text-bg">
                     <h1>{{ object|title }}</h1>
-                    <p class="opacity-75 badge bg-secondary text-wrap">
+                    <p class="opacity-75 badge bg-body-secondary text-wrap content md-1" style="overflow: hidden;">
                         {{ object.description }}
                     </p>
-                    <p><a class="btn btn-lg btn-secondary" href="{% url 'catalog:goods' object.pk %}">
-                        Увидеть больше
-                    </a></p>
                 </div>
             </div>
         </div>
