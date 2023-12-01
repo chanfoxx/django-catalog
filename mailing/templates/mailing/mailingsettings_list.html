@@ -1,38 +1,26 @@
 {% extends 'catalog/base.html' %}
+{% load static %}
 {% block content %}
-<div class="pricing-header px-3 py-3 pt-md-3 pb-md-4 mx-auto text-center">
+<div class="col-12 mb-5 text-center mt-3">
     {% if user.is_authenticated %}
-    <a class="btn btn-lg col-6 border" style="background-image: linear-gradient(to right, #2F4F4F, #708090);"
+    <a class="link-secondary" style="text-align: center;"
        href="{% url 'mailing:mailing_create' %}">
-        Добавить рассылку
+        <img src="{% static 'catalog/svg/plus-square.svg' %}" alt="Icon">
     </a>
     {% endif %}
 </div>
 {% for object in object_list %}
 <div class="container">
     <div class="row text-start">
-        <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="col-lg-5 col-md-6 col-sm-12">
             <div class="card mb-4 box-shadow">
+                {% include 'mailing/includes/inc_mailing.html' %}
                 <div class="card-body">
                     <div class="card-title fs-6">
                         <p>Начало рассылки: {{ object.start_time }}</p>
-                        <p>Период: {{ object.frequency }}</p>
+                        <p>Период: {{ object.get_frequency_display }}</p>
                     </div>
                     <hr>
-                    <div class="d-flex justify-content-between align-items-center">
-                        {% if user.is_authenticated %}
-                        <div class="btn-group">
-                            <a class="btn btn-sm" style="background-color: #2F4F4F;"
-                               href="{% url 'mailing:mailing_detail' object.pk %}"
-                               type="button">Просмотр</a>
-                            <a class="btn btn-sm btn-secondary" href="{% url 'mailing:mailing_update' object.pk %}"
-                               type="button">Изменить</a>
-                            <a class="btn btn-sm" style="background-color: #B22222;"
-                               href="{% url 'catalog:blog_delete' object.pk %}"
-                               type="button">Удалить</a>
-                        </div>
-                        {% endif %}
-                    </div>
                 </div>
             </div>
         </div>
