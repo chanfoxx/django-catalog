@@ -2,18 +2,37 @@
 {% load static %}
 {% block content %}
 <div class="col-12 mb-5 text-center mt-3">
+    <div class="col-5" style="height: 0px; margin: 0px 0px 0px 850px;">
+        <a class="btn btn-danger" href="{% url 'mailing:mailing_complete' %}">Завершенные</a>
+    </div>
     {% if user.is_authenticated %}
-    <a class="link-secondary" style="text-align: center;"
-       href="{% url 'mailing:mailing_create' %}">
-        <img src="{% static 'catalog/svg/plus-square.svg' %}" alt="Icon">
+    <a class="link-secondary" href="{% url 'mailing:mailing_create' %}">
+        <img style="padding-right: 20px, margin-top: 20px" src="{% static 'catalog/svg/plus-square.svg' %}" alt="Icon">
     </a>
     {% endif %}
+    <div class="col-5" style="height: 0px; margin: 10px 0px 0px 825px;">
+        <a class="btn btn-primary" href="{% url 'mailing:client_list' %}">Список получателей</a>
+    </div>
+</div>
 </div>
 {% for object in object_list %}
 <div class="container">
     <div class="row text-start">
         <div class="col-lg-5 col-md-6 col-sm-12">
             <div class="card mb-4 box-shadow">
+                {% if object.status == 'CR' %}
+                <div class="alert alert-primary" role="alert">
+                    {{ object.get_status_display }}
+                </div>
+                {% elif object.status == 'LC' %}
+                <div class="alert alert-success" role="alert">
+                    {{ object.get_status_display }}
+                </div>
+                {% elif object.status == 'CL' %}
+                <div class="alert alert-danger" role="alert">
+                    {{ object.get_status_display }}
+                </div>
+                {% endif %}
                 {% include 'mailing/includes/inc_mailing.html' %}
                 <div class="card-body">
                     <div class="card-title fs-6">
