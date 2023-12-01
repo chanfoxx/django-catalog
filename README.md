@@ -63,8 +63,6 @@
 
 
 <img width="1216" alt="Снимок экрана 2023-12-01 в 15 07 09" src="https://github.com/chanfoxx/django-catalog-project/assets/133925881/6added93-94e5-41e3-b1a0-d30b5b1399ed">
-<img width="1216" alt="Снимок экрана 2023-12-01 в 15 07 27" src="https://github.com/chanfoxx/django-catalog-project/assets/133925881/2e4ab3e1-d389-4135-98b2-8e9851a69d02">
-
 
 
 ## Ошибки и улучшения
