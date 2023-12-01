@@ -174,6 +174,8 @@ EMAIL_USE_SSL = True
 CRON_LOG = os.path.join(BASE_DIR, 'tmp', 'scheduled_job.log')
 
 CRONJOBS = [
+    # ('*/1 * * * *', 'mailing.cron.change_status_launched', '>>' + CRON_LOG),
+    # ('*/1 * * * *', 'mailing.cron.change_status_completed', '>>' + CRON_LOG),
     ('*/1 * * * *', 'mailing.cron.my_scheduled_job', '>>' + CRON_LOG),
 ]
 
