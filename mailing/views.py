@@ -8,6 +8,16 @@ class MailingListView(ListView):
     """Класс для отображения всех рассылок."""
     model = MailingSettings
 
+    def get_queryset(self):
+        """
+        Возвращает список товаров по номеру категории и
+        статусу публикации для отображения на странице.
+        """
+        queryset = super().get_queryset()  # Переопределяем метод.
+        queryset = queryset.filter(status__in=('CR', 'LC'))
+
+        return queryset
+
 
 class MailingEndingListView(ListView):
     """Класс для отображения всех рассылок."""
