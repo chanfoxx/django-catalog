@@ -30,17 +30,19 @@
                     <p>
                         Контент: "{{ object.message }}".
                     </p>
+                    {% if object.logs %}
                     <hr>
                     <p>
-                       <img src="{% static 'catalog/svg/calendar-check.svg' %}" alt="Icon">
+                        <img src="{% static 'catalog/svg/calendar-check.svg' %}" alt="Icon">
                     </p>
                     <p>
-                        Отправлено: {{ object.mailing_logs.date }}
-                        <hr>
-                        Статус: {{ object.mailing_logs.get_attempt_status_display }}
+                    Отправлено: {{ object.logs.date }}
                     <hr>
-                        Ответ почтового сервиса: {{ object.mailing_logs.mail_server_response }}
+                    Статус: {{ object.logs.get_attempt_status_display }}
+                    <hr>
+                    Ответ почтового сервиса: {{ object.logs.mail_server_response }}
                     </p>
+                    {% endif %}
                 </div>
                 <div class="card-footer">
                     <a class="btn btn-md" style="background-color: #2F4F4F;"
