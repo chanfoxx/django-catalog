@@ -1,6 +1,11 @@
 {% extends 'catalog/base.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
+<div class="col-12 mx-1 px-1 py-1" style="padding-left: 100px;">
+    <a class="btn btn-md" type="button" href="{% url 'catalog:main' %}">
+        <img src="{% static 'catalog/svg/arrow-left.svg' %}" alt="Icon"></a>
+</div>
 <div class="col-12">
     <form method="post" enctype="multipart/form-data">
         <div class="col-md-6 offset-md-1" style="margin-top: 20px;">
