@@ -1,19 +1,13 @@
 {% extends 'catalog/base.html' %}
 {% load static %}
 {% block content %}
-<div class="col-12 mb-5 text-center mt-3">
-    <div class="col-5" style="height: 0px; margin: 0px 0px 0px 850px;">
-        <a class="btn btn-danger" href="{% url 'mailing:mailing_complete' %}">Завершенные</a>
-    </div>
+<div class="col-12 mb-5 text-center mt-0">
+    {% include 'mailing/includes/inc_mailing_list_dots.html' %}
     {% if user.is_authenticated %}
     <a class="link-secondary" href="{% url 'mailing:mailing_create' %}">
         <img style="padding-right: 20px, margin-top: 20px" src="{% static 'catalog/svg/plus-square.svg' %}" alt="Icon">
     </a>
     {% endif %}
-    <div class="col-5" style="height: 0px; margin: 10px 0px 0px 825px;">
-        <a class="btn btn-primary" href="{% url 'mailing:client_list' %}">Список получателей</a>
-    </div>
-</div>
 </div>
 {% for object in object_list %}
 <div class="container">

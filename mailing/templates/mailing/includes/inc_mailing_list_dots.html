@@ -1,0 +1,20 @@
+{% load static %}
+{% load custom_filter %}
+<!-- Кнопки для блоговой записи (смотреть, изменить, удалить) -->
+<div class="d-flex justify-content-end position-relative">
+    <div class="btn-group" role="group">
+        <button type="button" class="btn dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="{% static 'catalog/svg/three-dots-vertical.svg' %}" alt="Icon">
+        </button>
+        <ul class="dropdown-menu">
+            {% if user.is_authenticated %}
+            <li><a class="dropdown-item" href="{% url 'mailing:mailing_complete' %}">
+                Завершенные</a>
+            </li>
+            <li><a class="dropdown-item" href="{% url 'mailing:client_list' %}">
+                Список получателей</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
