@@ -7,14 +7,14 @@
             <img src="{% static 'catalog/svg/three-dots.svg' %}" alt="Icon">
         </button>
         <ul class="dropdown-menu">
-            {% if user|has_group:"Модератор" or user.is_authenticated and user == object.creator %}
+            {% if user|has_group:"Модератор" or user.is_authenticated and user == object.creator or user.is_superuser %}
             <li><a class="dropdown-item" href="{% url 'catalog:update_product' object.pk %}">
-                Редактировать запись</a>
+                <img src="{% static 'catalog/svg/pen.svg' %}" alt="Icon"> Редактировать</a>
             </li>
             {% endif %}
             {% if user.is_authenticated and user == object.creator or user.is_superuser %}
             <li><a class="dropdown-item" href="{% url 'catalog:delete_product' object.pk %}">
-                Удалить запись</a>
+                <img src="{% static 'catalog/svg/trash3.svg' %}" alt="Icon"> Удалить</a>
             </li>
             {% endif %}
         </ul>
