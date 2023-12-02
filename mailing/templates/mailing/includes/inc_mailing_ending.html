@@ -9,7 +9,7 @@
         <ul class="dropdown-menu">
             {% if user.is_authenticated %}
             <li><a class="dropdown-item" href="{% url 'mailing:mailing_detail' object.pk %}">
-                Просмотреть рассылку</a>
+                <img src="{% static 'catalog/svg/calendar2-week.svg' %}" alt="Icon"> Просмотреть рассылку</a>
             </li>
             {% endif %}
         </ul>
