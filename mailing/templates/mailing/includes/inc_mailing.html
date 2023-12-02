@@ -1,6 +1,6 @@
 {% load static %}
 {% load custom_filter %}
-<!-- Кнопки для блоговой записи (смотреть, изменить, удалить) -->
+<!-- Кнопки для рассылки (смотреть, изменить, удалить) -->
 <div class="d-flex justify-content-end position-relative">
     <div class="btn-group" role="group">
         <button type="button" class="btn dropdown" data-bs-toggle="dropdown" aria-expanded="false">
@@ -9,14 +9,13 @@
         <ul class="dropdown-menu">
             {% if user.is_authenticated %}
             <li><a class="dropdown-item" href="{% url 'mailing:mailing_detail' object.pk %}">
-                Просмотреть рассылку</a>
+                <img src="{% static 'catalog/svg/calendar2-week.svg' %}" alt="Icon"> Просмотреть рассылку</a>
             </li>
             <li><a class="dropdown-item" href="{% url 'mailing:mailing_update' object.pk %}">
-                Редактировать рассылку</a>
+                 <img src="{% static 'catalog/svg/pen.svg' %}" alt="Icon"> Редактировать рассылку</a>
             </li>
             <li><a class="dropdown-item" href="{% url 'mailing:mailing_delete' object.pk %}">
-                Удалить</a>
-            </li>
+                <img src="{% static 'catalog/svg/trash3.svg' %}" alt="Icon"> Удалить</a>
             {% endif %}
         </ul>
     </div>
