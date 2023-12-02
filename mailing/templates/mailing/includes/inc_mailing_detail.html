@@ -9,10 +9,10 @@
         <ul class="dropdown-menu">
             {% if user.is_authenticated %}
             <li><a class="dropdown-item" href="{% url 'mailing:mailing_update' object.pk %}">
-                Редактировать рассылку</a>
+                <img src="{% static 'catalog/svg/pen.svg' %}" alt="Icon"> Редактировать рассылку</a>
             </li>
             <li><a class="dropdown-item" href="{% url 'mailing:mailing_delete' object.pk %}">
-                Удалить</a>
+                <img src="{% static 'catalog/svg/trash3.svg' %}" alt="Icon"> Удалить</a>
             </li>
             {% endif %}
         </ul>
