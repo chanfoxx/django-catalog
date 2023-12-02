@@ -35,10 +35,8 @@
                 {% endif %}
                 {% include 'mailing/includes/inc_mailing.html' %}
                 <div class="card-body">
-                    <div class="card-title fs-6">
-                        <p>Начало рассылки: {{ object.start_time }}</p>
-                        <p>Период: {{ object.get_frequency_display }}</p>
-                    </div>
+                    <p>Начало рассылки: {{ object.start_time }}</p>
+                    <p>Период: {{ object.get_frequency_display }}</p>
                     <hr>
                 </div>
             </div>
