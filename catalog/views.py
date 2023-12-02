@@ -231,7 +231,7 @@ class BlogListView(LoginRequiredMixin, ListView):
     def get_queryset(self, *args, **kwargs):
         """Возвращает опубликованные записи."""
         queryset = super().get_queryset(*args, **kwargs)
-        queryset = queryset.filter(is_published=True)
+        queryset = queryset.filter(is_published=True).order_by('creation_date').reverse()
 
         return queryset
 
