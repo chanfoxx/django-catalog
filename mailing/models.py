@@ -72,7 +72,7 @@ class MailingSettings(models.Model):
     message = models.ForeignKey(MailingMessage, on_delete=models.CASCADE, verbose_name='Контент')
 
     @property
-    def mailing_logs(self) -> Optional['MailingLogs']:
+    def logs(self) -> Optional['MailingLogs']:
         return self.mailinglogs_set.get()
 
     def __str__(self):
