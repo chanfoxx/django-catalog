@@ -1,31 +1,33 @@
 {% extends 'catalog/base.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center"></div>
-<div class="container">
-    <div class="row text-start">
-        <div class="col-lg-12 col-md-6 col-sm-12">
-            <div class="card mb-4 box-shadow">
-                <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">Создать или изменить запись</h4>
-                </div>
-                <div class="card-body">
-                    <form method="POST" class="form-floating" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            {{ form|crispy }}
-                        </div>
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-lg btn-success">
-                                {% if object %}
-                                Сохранить
-                                {% else %}
-                                Создать
-                                {% endif %}
-                            </button>
-                        </div>
-                    </form>
-                </div>
+<div class="col-12 mx-1 px-1 py-1" style="padding-left: 100px;">
+    <a class="btn btn-md" type="button" href="{% url 'catalog:blog_list' %}">
+        <img src="{% static 'catalog/svg/arrow-left.svg' %}" alt="Icon"></a>
+</div>
+<div class="row text-start">
+    <div class="col-lg-5 mx-4" style="padding-top: 30px; padding-left: 40px; padding-bottom: 10px;">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Создать или изменить запись</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" class="form-floating" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        {{ form|crispy }}
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-lg btn-success">
+                            {% if object %}
+                            Сохранить
+                            {% else %}
+                            Создать
+                            {% endif %}
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
