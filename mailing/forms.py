@@ -5,7 +5,7 @@ from mailing.models import MailingSettings, Client, MailingMessage
 class MailingForm(forms.ModelForm):
     class Meta:
         model = MailingSettings
-        exclude = ('status',)
+        exclude = ('status', 'creator',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -24,3 +24,9 @@ class MessageForm(forms.ModelForm):
     class Meta:
         model = MailingMessage
         fields = '__all__'
+
+
+class ManagerForm(forms.ModelForm):
+    class Meta:
+        model = MailingSettings
+        fields = ('status',)

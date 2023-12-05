@@ -20,3 +20,9 @@ class UserProfileForm(UserChangeForm):
         super().__init__(*args, **kwargs)
 
         self.fields['password'].widget = forms.HiddenInput()
+
+
+class Manager(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('is_active',)

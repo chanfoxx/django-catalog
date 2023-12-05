@@ -11,7 +11,7 @@
                 <img src="{% static 'catalog/svg/chat-heart.svg' %}" alt="Icon"> Просмотреть запись</a>
             </li>
             {% endif %}
-            {% if user.is_authenticated and user == object.creator or user.is_superuser %}
+            {% if user == object.creator or user.is_superuser %}
             <li><a class="dropdown-item" href="{% url 'catalog:blog_update' object.pk %}">
                 <img src="{% static 'catalog/svg/pen.svg' %}" alt="Icon"> Редактировать запись</a>
             </li>

@@ -1,14 +1,16 @@
 {% extends 'catalog/base.html' %}
+{% load custom_filter %}
 {% load static %}
 {% block content %}
 <div class="col-12 mb-5 text-center mt-0">
     {% include 'mailing/includes/inc_mailing_list_dots.html' %}
-    {% if user.is_authenticated %}
+    {% if not user|has_group:"Менеджер" %}
     <a class="link-secondary" href="{% url 'mailing:mailing_create' %}">
         <img style="padding-right: 20px, margin-top: 20px" src="{% static 'catalog/svg/plus-square.svg' %}" alt="Icon">
     </a>
     {% endif %}
 </div>
+{% if user == object.creator or user|has_group:"Менеджер" or user.is_superuser %}
 {% for object in object_list %}
 <div class="container">
     <div class="row text-start">
@@ -38,4 +40,5 @@
     </div>
 </div>
 {% endfor %}
+{% endif %}
 {% endblock %}
