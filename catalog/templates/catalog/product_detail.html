@@ -1,6 +1,7 @@
 {% extends 'catalog/base.html' %}
 {% load static %}
 {% block content %}
+{% if user == object.creator %}
 <div class="col-12 mx-1 px-1 py-1" style="padding-left: 100px;">
     <a class="btn btn-md" type="button" href="{% url 'catalog:goods' object.category_id %}">
         <img src="{% static 'catalog/svg/arrow-left.svg' %}" alt="Icon"></a>
@@ -36,4 +37,5 @@
         </div>
     </div>
 </div>
+{% endif %}
 {% endblock %}
