@@ -1,5 +1,6 @@
 {% extends 'catalog/base.html' %}
 {% load static %}
+{% load custom_filter %}
 {% block content %}
 <div class="row g-5">
     <div class="col-md-8" style="padding-top: 20px; padding-left: 70px;">
@@ -29,13 +30,15 @@
     </div>
     <div class="col-md-4" style="padding-top: 20px;">
         <!--Создать запись-->
-        {% if user.is_authenticated %}
+        {% if not user|has_group:"Модератор" %}
+        {% if not user|has_group:"Менеджер" %}
         <div class="mb-3" style="text-align: center;">
             <a class="link-secondary" style="text-align: center;"
                href="{% url 'catalog:blog_create' %}">
                 <img src="{% static 'catalog/svg/plus-square.svg' %}" alt="Icon">
             </a>
         </div>
+        {% endif %}
         {% endif %}
         <div class="position-sticky" style="top: 2rem;">
             <div class="p-4 mb-3 bg-body-tertiary rounded">
