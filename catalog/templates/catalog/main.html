@@ -20,6 +20,7 @@
         <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
     </div>
     <!-- Вывод товаров -->
+    {% if user == object.creator or user.is_superuser %}
     <div class="d-md-flex flex-md-equal my-md-3 ps-md-3">
         {% for object in object_list %}
         <div class="bg-body-tertiary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden gradient-card">
@@ -44,5 +45,6 @@
         {% endif %}
         {% endfor %}
     </div>
+    {% endif %}
 </main>
 {% endblock %}
