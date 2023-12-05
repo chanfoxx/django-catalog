@@ -15,7 +15,9 @@
                     {{ object.get_status_display }}
                 </div>
                 {% endif %}
+                {% if user == object.creator or user.is_superuser %}
                 {% include 'mailing/includes/inc_mailing_ending.html' %}
+                {% endif %}
                 <div class="card-body">
                     <div class="card-title fs-6">
                         <p>Начало рассылки: {{ object.start_time }}</p>
