@@ -8,7 +8,7 @@ from catalog.forms import BlogForm, ProductForm, VersionForm, ModeratorForm, Con
 from catalog.models import Product, Category, Contact, Blog, Version
 from django.views.generic import (ListView, DetailView, TemplateView, DeleteView,
                                   CreateView, UpdateView)
-from catalog.services import get_category_cache, get_categories_cache
+from catalog.services import get_category_cache
 
 
 class MainListView(ListView):
@@ -79,10 +79,18 @@ class ProductListView(ListView):
         return context_data
 
 
-class ProductCreateView(LoginRequiredMixin, CreateView):
+class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     """Класс для создания товара."""
     model = Product  # Модель.
     form_class = ProductForm  # Форма.
+    permission_required = ('catalog.add_product',)
+
+    def has_permission(self):
+        """Настраивает способ проверки разрешений."""
+        perms = self.get_permission_required()  # Получаем список разрешений.
+        user = self.request.user
+        # Проверяем, имеет ли пользователь необходимые права.
+        return user.has_perms(perms)
 
     def get_success_url(self):
         """Перенаправляет на страницу жанра(категории) товара."""
@@ -195,22 +203,52 @@ class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
         return super().form_valid(form)
 
 
-class ProductDetailView(LoginRequiredMixin, DetailView):
+class ProductDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     """Класс для отображения определенной игры."""
     model = Product
+    permission_required = ('catalog.view_product',)
+
+    def has_permission(self):
+        """Настраивает способ проверки разрешений."""
+        perms = self.get_permission_required()  # Получаем список разрешений.
+        # Получаем объект товара и текущего пользователя.
+        product = self.get_object()
+        user = self.request.user
+        # Проверяем, является ли пользователь владельцем товара,
+        # либо имеет необходимые права.
+        return user == product.creator or user.has_perm(perms)
 
 
-class ProductDeleteView(LoginRequiredMixin, DeleteView):
+class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     """Класс для удаления определенной блоговой записи."""
     model = Product  # Модель.
+    permission_required = ('catalog.delete_product',)
     success_url = reverse_lazy('catalog:categories')
 
+    def has_permission(self):
+        """Настраивает способ проверки разрешений."""
+        perms = self.get_permission_required()  # Получаем список разрешений.
+        # Получаем объект товара и текущего пользователя.
+        product = self.get_object()
+        user = self.request.user
+        # Проверяем, является ли пользователь владельцем товара,
+        # либо имеет необходимые права.
+        return user == product.creator or user.has_perms(perms)
 
-class BlogCreateView(LoginRequiredMixin, CreateView):
+
+class BlogCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     """Класс для создания блоговой записи."""
     model = Blog  # Модель.
     form_class = BlogForm  # Форма.
+    permission_required = ('catalog.add_blog',)
     success_url = reverse_lazy('catalog:blog_list')
+
+    def has_permission(self):
+        """Настраивает способ проверки разрешений."""
+        perms = self.get_permission_required()  # Получаем список разрешений.
+        user = self.request.user
+        # Проверяем, имеет ли пользователь необходимые права.
+        return user.has_perms(perms)
 
     def form_valid(self, form):
         """Проверяет валидность формы, если успешно - сохраняет ее."""
@@ -249,11 +287,22 @@ class BlogDetailView(LoginRequiredMixin, DetailView):
         return self.object
 
 
-class BlogUpdateView(LoginRequiredMixin, UpdateView):
+class BlogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     """Класс для изменения определенной блоговой записи."""
     model = Blog
     form_class = BlogForm
+    permission_required = ('catalog.update_blog',)
     success_url = reverse_lazy('catalog:blog_list')
+
+    def has_permission(self):
+        """Настраивает способ проверки разрешений."""
+        perms = self.get_permission_required()  # Получаем список разрешений.
+        # Получаем объект блоговой записи и текущего пользователя.
+        blog_note = self.get_object()
+        user = self.request.user
+        # Проверяем, является ли пользователь автором записи,
+        # либо имеет необходимые права.
+        return user == blog_note.creator or user.has_perms(perms)
 
     def form_valid(self, form):
         """Проверяет валидность формы, если успешно - сохраняет ее."""
@@ -265,10 +314,21 @@ class BlogUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class BlogDeleteView(LoginRequiredMixin, DeleteView):
+class BlogDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     """Класс для удаления определенной блоговой записи."""
     model = Blog
+    permission_required = ('catalog.delete_blog',)
     success_url = reverse_lazy('catalog:blog_list')
+
+    def has_permission(self):
+        """Настраивает способ проверки разрешений."""
+        perms = self.get_permission_required()  # Получаем список разрешений.
+        # Получаем объект блоговой записи и текущего пользователя.
+        blog_note = self.get_object()
+        user = self.request.user
+        # Проверяем, является ли пользователь автором записи,
+        # либо имеет необходимые права.
+        return user == blog_note.creator or user.has_perms(perms)
 
 
 def is_moderator(user):
