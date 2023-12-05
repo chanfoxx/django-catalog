@@ -1,7 +1,6 @@
 from typing import Optional
-
 from django.db import models
-from django.utils import timezone
+from django.conf import settings
 
 
 NULLABLE = {'blank': True, 'null': True}
@@ -25,12 +24,13 @@ class Client(models.Model):
 
 class MailingMessage(models.Model):
     """Модель сообщения рассылки."""
-    subject = models.CharField(max_length=150, verbose_name='Тема письма', **NULLABLE)
+    subject = models.CharField(max_length=150, verbose_name='Тема письма',
+                               **NULLABLE)
     body = models.TextField(verbose_name='Тело письма', **NULLABLE)
 
     def __str__(self):
         """Возвращает строковое представление о классе сообщения рассылки."""
-        return f'{self.subject}'
+        return f'Тема рассылки: "{self.subject}".'
 
     class Meta:
         """Метаданные для модели сообщения рассылки."""
@@ -63,13 +63,21 @@ class MailingSettings(models.Model):
 
     start_time = models.DateTimeField(verbose_name='Время начала рассылки')
     end_time = models.DateTimeField(verbose_name='Время окончания рассылки')
-    frequency = models.CharField(max_length=4, choices=FREQUENCY_MAILING,
-                                 default=ONCE_A_DAY, verbose_name='Периодичность')
-    status = models.CharField(max_length=2, choices=STATUS_MAILING, default=CREATED,
-                              verbose_name='Статус рассылки')
+
+    frequency = models.CharField(
+        max_length=4, choices=FREQUENCY_MAILING,
+        default=ONCE_A_DAY, verbose_name='Периодичность')
+    status = models.CharField(
+        max_length=2, choices=STATUS_MAILING,
+        default=CREATED, verbose_name='Статус рассылки')
 
     client = models.ManyToManyField(Client, verbose_name='Получатель')
-    message = models.ForeignKey(MailingMessage, on_delete=models.CASCADE, verbose_name='Контент')
+    message = models.ForeignKey(
+        MailingMessage, on_delete=models.CASCADE, verbose_name='Контент')
+
+    creator = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
+        verbose_name='Продавец', default=53, **NULLABLE)
 
     @property
     def logs(self) -> Optional['MailingLogs']:
@@ -84,6 +92,10 @@ class MailingSettings(models.Model):
         verbose_name = 'Настройки рассылки.'
         verbose_name_plural = 'Настройки рассылок'
 
+        permissions = [
+            ('set_status', 'Может отключать рассылки'),
+        ]
+
 
 class MailingLogs(models.Model):
     """Модель логов рассылки."""
@@ -96,13 +108,18 @@ class MailingLogs(models.Model):
         (FAILURE, 'Неудачно'),
     ]
 
-    date = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время последней попытки', **NULLABLE)
+    date = models.DateTimeField(auto_now_add=True,
+                                verbose_name='Дата и время последней попытки',
+                                **NULLABLE)
     attempt_status = models.IntegerField(choices=ATTEMPT_STATUS_CHOICES,
                                          verbose_name='Статус попытки', **NULLABLE)
-    mail_server_response = models.CharField(verbose_name='Ответ почтового сервера', **NULLABLE)
+    mail_server_response = models.CharField(verbose_name='Ответ почтового сервера',
+                                            **NULLABLE)
 
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Получатель')
-    mailing_settings = models.ForeignKey(MailingSettings, on_delete=models.CASCADE, verbose_name='Настройки')
+    client = models.ForeignKey(
+        Client, on_delete=models.CASCADE, verbose_name='Получатель')
+    mailing_settings = models.ForeignKey(
+        MailingSettings, on_delete=models.CASCADE, verbose_name='Настройки')
 
     def __str__(self):
         """Возвращает строковое представление о классе логов рассылки."""
