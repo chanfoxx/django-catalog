@@ -7,7 +7,7 @@
             <img src="{% static 'catalog/svg/three-dots.svg' %}" alt="Icon">
         </button>
         <ul class="dropdown-menu">
-            {% if user.is_authenticated %}
+            {% if user == object.creator or user.is_superuser %}
             <li><a class="dropdown-item" href="{% url 'mailing:mailing_detail' object.pk %}">
                 <img src="{% static 'catalog/svg/calendar2-week.svg' %}" alt="Icon"> Просмотреть рассылку</a>
             </li>

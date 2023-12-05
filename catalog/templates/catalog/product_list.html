@@ -6,19 +6,23 @@
     <a class="btn btn-md" type="button" href="{% url 'catalog:categories' %}">
         <img src="{% static 'catalog/svg/arrow-left.svg' %}" alt="Icon"></a>
 </div>
+{% if not user|has_group:"Менеджер" %}
 <div class="col-12 mb-5 text-center mt-3">
-    {% if not user|has_group:"Модератор" %}
+    {% if not user|has_group:"Модератор"%}
     <a class="link-secondary" style="text-align: center;"
        href="{% url 'catalog:create_product' category.id %}">
         <img src="{% static 'catalog/svg/plus-square.svg' %}" alt="Icon">
     </a>
     {% endif %}
 </div>
+{% endif %}
 <div class="row mb-2 mx-3 px-3">
     {% for object in object_list %}
     <div class="col-6">
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            {% if user == object.creator or user|has_group:"Модератор" or user.is_superuser %}
             {% include 'catalog/includes/inc_catalog_product.html' %}
+            {% endif %}
             <div class="col p-4 d-flex flex-column position-static">
                 <strong class="d-inline-block mb-2 text-emphasis">{{ category|title }}</strong>
                 <h4 class="mb-0">{{ object.title }}</h4>

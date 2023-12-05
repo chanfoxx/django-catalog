@@ -25,12 +25,14 @@
                         Создать
                         {% endif %}
                     </button>
+                    {% if user == object.creator or user.is_superuser %}
                     <a class="btn" style="background-color: #2F4F4F;"
                        href="{% url 'mailing:message_create' %}">
                         <img src="{% static 'catalog/svg/envelope-plus.svg' %}" alt="Icon"></a>
                     <a class="btn" style="background-color: #2F4F4F;"
                        href="{% url 'mailing:client_create' %}">
                         <img src="{% static 'catalog/svg/person-plus-fill.svg' %}" alt="Icon"></a>
+                    {% endif %}
                 </div>
                 <div class="card-footer">
                 </div>

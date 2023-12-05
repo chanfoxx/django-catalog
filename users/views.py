@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView as BaseLoginView
 from django.contrib.auth.views import LogoutView as BaseLogoutView
@@ -45,11 +46,12 @@ class LogoutView(BaseLogoutView):
     pass
 
 
-class ProfileView(UpdateView):
+class ProfileView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     """Класс для отображения формы редактирования профиля."""
     model = User
     form_class = UserProfileForm
     success_url = reverse_lazy('users:profile')
+    permission_required = ('users.set_is_active',)
 
     def get_object(self, queryset=None):
         return self.request.user
