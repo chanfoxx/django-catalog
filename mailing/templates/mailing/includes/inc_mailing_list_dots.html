@@ -7,10 +7,12 @@
             <img src="{% static 'catalog/svg/three-dots-vertical.svg' %}" alt="Icon">
         </button>
         <ul class="dropdown-menu">
-            {% if user.is_authenticated %}
+            {% if user == object.creator or user|has_group:"Менеджер" or user.is_superuser %}
             <li><a class="dropdown-item" href="{% url 'mailing:mailing_complete' %}">
                 <img src="{% static 'catalog/svg/calendar2-week.svg' %}" alt="Icon"> Завершенные</a>
             </li>
+            {% endif %}
+            {% if not user|has_group:"Менеджер" %}
             <li><a class="dropdown-item" href="{% url 'mailing:client_list' %}">
                 <img src="{% static 'catalog/svg/people.svg' %}" alt="Icon"> Список получателей</a>
             </li>
