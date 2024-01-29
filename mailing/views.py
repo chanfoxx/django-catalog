@@ -1,8 +1,17 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+
+from catalog.views import is_moderator
 from mailing.forms import MailingForm, MessageForm, ClientForm, ManagerForm
 from mailing.models import MailingSettings, MailingMessage, Client
+
+
+def is_manager(user):
+    """Возвращает булево значение на вхождение пользователя в группу."""
+    return user.groups.filter(name='Менеджер').exists()
+
+# MailingSettings
 
 
 class MailingListView(LoginRequiredMixin, ListView):
@@ -88,46 +97,6 @@ class MailingUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
             return MailingForm
 
 
-class MessageCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
-    """Класс для создания нового сообщения."""
-    model = MailingMessage
-    form_class = MessageForm
-    permission_required = ('mailing.add_mailingmessage',)
-    success_url = reverse_lazy('mailing:mailing_create')
-
-    def has_permission(self):
-        """Настраивает способ проверки разрешений."""
-        perms = self.get_permission_required()  # Получаем список разрешений.
-        user = self.request.user
-        # Проверяем, имеет ли пользователь необходимые права.
-        return user.has_perms(perms)
-
-
-class ClientCreateView(LoginRequiredMixin, CreateView):
-    """Класс для создания нового получателя."""
-    model = Client
-    form_class = ClientForm
-    success_url = reverse_lazy('mailing:mailing_create')
-
-
-class ClientUpdateView(LoginRequiredMixin, UpdateView):
-    """Класс для изменения определенной рассылки."""
-    model = Client
-    form_class = ClientForm
-    success_url = reverse_lazy('mailing:client_list')
-
-
-class ClientListView(LoginRequiredMixin, ListView):
-    """Класс для отображения всех рассылок."""
-    model = Client
-
-
-class ClientDeleteView(LoginRequiredMixin, DeleteView):
-    """Класс для удаления определенной рассылки."""
-    model = Client
-    success_url = reverse_lazy('mailing:mailing_list')
-
-
 class MailingDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     """Класс для отображения определенной рассылки."""
     model = MailingSettings
@@ -161,6 +130,92 @@ class MailingDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView)
         return user == mailing.creator or user.has_perms(perms)
 
 
-def is_manager(user):
-    """Возвращает булево значение на вхождение пользователя в группу."""
-    return user.groups.filter(name='Менеджер').exists()
+# MailingMessage
+
+
+class MessageCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    """Класс для создания нового сообщения."""
+    model = MailingMessage
+    form_class = MessageForm
+    permission_required = ('mailing.add_mailingmessage',)
+    success_url = reverse_lazy('mailing:mailing_create')
+
+    def has_permission(self):
+        """Настраивает способ проверки разрешений."""
+        user = self.request.user
+        # Проверяем, имеет ли пользователь необходимые права.
+        return not is_manager(user)
+
+
+# Client
+
+
+class ClientListView(LoginRequiredMixin, ListView):
+    """Класс для отображения всех рассылок."""
+    model = Client
+
+
+class ClientCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    """Класс для создания нового получателя."""
+    model = Client
+    form_class = ClientForm
+    permission_required = ('mailing.add_client',)
+    success_url = reverse_lazy('mailing:mailing_create')
+
+    def has_permission(self):
+        """Настраивает способ проверки разрешений."""
+        user = self.request.user
+        # Проверяем, имеет ли пользователь необходимые права.
+        return not (is_manager(user) or is_moderator(user))
+
+
+class ClientDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+    """Класс для удаления определенной рассылки."""
+    model = Client
+    permission_required = ('mailing.view_client',)
+    success_url = reverse_lazy('mailing:mailing_list')
+
+    def has_permission(self):
+        """Настраивает способ проверки разрешений."""
+        perms = self.get_permission_required()  # Получаем список разрешений.
+        # Получаем объект клиента и текущего пользователя.
+        client = self.get_object()
+        user = self.request.user
+        # Проверяем, является ли пользователь создателем объекта клиента,
+        # либо имеет необходимые права.
+        return user == client.creator or user.has_perm(perms)
+
+
+class ClientUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    """Класс для изменения определенной рассылки."""
+    model = Client
+    form_class = ClientForm
+    permission_required = ('mailing.change_client',)
+    success_url = reverse_lazy('mailing:client_list')
+
+    def has_permission(self):
+        """Настраивает способ проверки разрешений."""
+        perms = self.get_permission_required()  # Получаем список разрешений.
+        # Получаем объект клиента и текущего пользователя.
+        client = self.get_object()
+        user = self.request.user
+        # Проверяем, является ли пользователь создателем объекта клиента,
+        # либо имеет необходимые права.
+        return user == client.creator and user.has_perms(perms)
+
+
+class ClientDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    """Класс для удаления определенной рассылки."""
+    model = Client
+    permission_required = ('mailing.delete_client',)
+    success_url = reverse_lazy('mailing:mailing_list')
+
+    def has_permission(self):
+        """Настраивает способ проверки разрешений."""
+        perms = self.get_permission_required()  # Получаем список разрешений.
+        # Получаем объект клиента и текущего пользователя.
+        client = self.get_object()
+        user = self.request.user
+        # Проверяем, является ли пользователь создателем объекта клиента,
+        # либо имеет необходимые права.
+        return user == client.creator or user.has_perms(perms)
