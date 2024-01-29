@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.urls import path
 from users.views import (LoginView, LogoutView, RegisterView, ProfileView, EmailConfirmView,
-                         EmailVerifyView, EmailErrorView, PasswordTemplateView)
+                         EmailVerifyView, EmailErrorView, PasswordTemplateView, UserListView, set_active)
 from users.apps import UsersConfig
 
 
@@ -24,7 +24,10 @@ app_name = UsersConfig.name
 
 
 urlpatterns = [
-    path('', LoginView.as_view(), name='login'),
+    path('login', LoginView.as_view(), name='login'),
+
+    path('', UserListView.as_view(), name='users'),
+    path('<int:pk>/', set_active, name='set_active'),
 
     path('email_verify/', EmailConfirmView.as_view(), name='email_confirm'),
     path('email_verify/error_page/', EmailErrorView.as_view(), name='email_error'),
