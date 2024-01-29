@@ -1,4 +1,5 @@
 {% extends 'catalog/base.html' %}
+{% load custom_filter %}
 {% load static %}
 {% block content %}
 <div class="col-12 mx-5 px-3 py-3">
@@ -6,19 +7,20 @@
         <img src="{% static 'catalog/svg/arrow-left.svg' %}" alt="Icon"></a>
 </div>
 {% for object in object_list %}
+{% if user == object.creator or user|has_group:"Менеджер" or user.is_superuser %}
 <div class="container">
     <div class="row text-start">
-        <div class="col-lg-5 col-md-6 col-sm-12">
-            <div class="card mb-4 box-shadow">
-                <div class="card-body mx-1" style="padding-top: 1px; padding-right: 1px;">
-                    {% include 'mailing/includes/inc_client.html' %}
-                    <div class="card-title fs-6">
-                        {{ object }}
-                    </div>
-                </div>
-            </div>
-        </div>
+        <table class="table table-hover">
+            <tbody>
+            <tr>
+                <td scope="col">{{ object.full_name }}</td>
+                <th scope="col">{{ object.email }}</th>
+                <th scope="col">{% include 'mailing/includes/inc_client_dots.html' %}</th>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
+{% endif %}
 {% endfor %}
 {% endblock %}
