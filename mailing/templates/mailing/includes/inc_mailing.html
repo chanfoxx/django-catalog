@@ -14,13 +14,14 @@
             {% endif %}
             {% if user == object.creator or user|has_group:"Менеджер" or user.is_superuser %}
             <li><a class="dropdown-item" href="{% url 'mailing:mailing_update' object.pk %}">
-                 <img src="{% static 'catalog/svg/pen.svg' %}" alt="Icon"> Редактировать рассылку</a>
+                <img src="{% static 'catalog/svg/pen.svg' %}" alt="Icon"> Редактировать рассылку</a>
             </li>
             {% endif %}
             {% if user == object.creator or user.is_superuser %}
             <hr>
             <li><a class="dropdown-item" href="{% url 'mailing:mailing_delete' object.pk %}">
                 <img src="{% static 'catalog/svg/trash3.svg' %}" alt="Icon"> Удалить</a>
+            </li>
             {% endif %}
         </ul>
     </div>
