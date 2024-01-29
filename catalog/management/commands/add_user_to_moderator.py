@@ -12,5 +12,5 @@ class Command(BaseCommand):
             user.is_staff = True
             user.groups.add(group)
             user.save()
-        except Exception:
-            print('Не удалось добавить пользователей в группу.')
+        except Exception as e:
+            print(f'Не удалось добавить пользователей в группу. Ошибка: {str(e)}.')

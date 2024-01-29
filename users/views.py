@@ -1,12 +1,13 @@
+from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView as BaseLoginView
 from django.contrib.auth.views import LogoutView as BaseLogoutView
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.utils.crypto import get_random_string
 from django.views import View
-from django.views.generic import CreateView, UpdateView, TemplateView
+from django.views.generic import CreateView, UpdateView, TemplateView, ListView
 from users.forms import UserRegisterForm, UserProfileForm
 from users.models import User, EmailVerification
 from users.services import send_new_password, send_confirm_email
@@ -55,6 +56,11 @@ class ProfileView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+class UserListView(ListView):
+    """Класс для отображения всех пользователей."""
+    model = User
 
 
 class RegisterView(CreateView):
@@ -113,3 +119,16 @@ class EmailVerifyView(View):
         email_verification.save()
 
         return redirect('users:login')
+
+
+# @permission_required('users.set_is_active')
+def set_active(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if user.is_active:
+        user.is_active = False
+    else:
+        user.is_active = True
+
+    user.save()
+
+    return redirect('users:users')

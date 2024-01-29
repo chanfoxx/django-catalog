@@ -1,0 +1,35 @@
+{% extends "catalog/base.html" %}
+{% load static %}
+{% block content %}
+<div class="col-12 mx-1 px-2 py-2 md-1">
+    <a class="btn btn-md" type="button" href="{% url 'mailing:client_list' %}">
+        <img src="{% static 'catalog/svg/arrow-left.svg' %}" alt="Icon"></a>
+</div>
+<div class="container">
+    <div class="row text-start">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    {% include 'mailing/includes/inc_client.html' %}
+                    <h4 class="my-0 font-weight-normal">Клиент</h4>
+                </div>
+                <div class="card-body">
+                    <p>
+                        ФИО: {{ object.full_name }}
+                    </p>
+                    <hr>
+                    <p>
+                        Комментарий: "{{ object.comment }}".
+                    </p>
+                    <hr>
+                    <p>
+                        E-mail: {{ object.email }}
+                    </p>
+                </div>
+                <div class="card-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

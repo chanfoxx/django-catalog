@@ -12,6 +12,10 @@ class Client(models.Model):
     full_name = models.CharField(max_length=250, verbose_name='ФИО', **NULLABLE)
     comment = models.TextField(verbose_name='Комментарий', **NULLABLE)
 
+    creator = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
+        verbose_name='Продавец', default=53, **NULLABLE)
+
     def __str__(self) -> str:
         """Возвращает строковое представление о классе клиента сервиса."""
         return f'{self.full_name} ({self.email})'
