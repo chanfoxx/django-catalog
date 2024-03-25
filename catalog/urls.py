@@ -22,9 +22,7 @@ from catalog.views import (MainListView, ContactCreateView, CategoryListView,
                            BlogCreateView, BlogDetailView, BlogUpdateView, BlogDeleteView,
                            ProductCreateView, ProductUpdateView, ProductDeleteView, ContactThankView)
 
-
 app_name = CatalogConfig.name
-
 
 urlpatterns = [
     path('', MainListView.as_view(), name='main'),
