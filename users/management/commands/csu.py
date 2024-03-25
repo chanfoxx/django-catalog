@@ -1,16 +1,20 @@
 from django.core.management import BaseCommand
+
 from users.models import User
+
 import os
 from dotenv import load_dotenv
 
 
 class Command(BaseCommand):
-    """Команда для создания супер пользователя."""
+    """ Команда для создания супер пользователя. """
+
     def handle(self, *args, **kwargs):
         load_dotenv()
-        email_admin = os.getenv('EMAIL_PASSWORD')
+        password_admin = os.getenv('PASSWORD_ADMIN')
+        email_admin = os.getenv('EMAIL_ADMIN')
         user = User.objects.create(
-            email='cchloexx@yandex.ru',
+            email=email_admin,
             first_name='Admin',
             last_name='Admin',
             is_superuser=True,
@@ -18,5 +22,5 @@ class Command(BaseCommand):
             is_active=True,
         )
 
-        user.set_password(email_admin)
+        user.set_password(password_admin)
         user.save()
