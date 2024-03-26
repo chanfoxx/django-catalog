@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from catalog.models import Product, Category, Contact, Blog, Version
+from users.models import User
 
 
 @admin.action(description='Опубликовать выбранные товары')
@@ -9,13 +10,20 @@ def make_published(modeladmin, request, queryset):
     queryset.update(is_published=True)
 
 
+@admin.action(description='Объявить продавцом администратора')
+def set_admin(modeladmin, request, queryset):
+    """ Ставит администратора владельцем товара. """
+    user_admin = User.objects.get(is_superuser=True)
+    queryset.update(creator=user_admin)
+
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     """ Отображение товара в административной панели. """
     list_display = ('id', 'title', 'price', 'category', 'is_published',)
     list_filter = ('category',)
     search_fields = ('title', 'description',)
-    actions = [make_published]
+    actions = [make_published, set_admin]
 
 
 @admin.register(Version)
