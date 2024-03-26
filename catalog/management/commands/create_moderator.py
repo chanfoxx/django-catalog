@@ -1,9 +1,10 @@
 from django.core.management.base import BaseCommand
-from django.contrib.auth.models import Group, Permission, User
+from django.contrib.auth.models import Group, Permission
 
 
 class Command(BaseCommand):
-    """Создает группу и добавляет права доступа."""
+    """ Создает группу и добавляет права доступа. """
+
     def handle(self, *args, **kwargs):
         try:
             new_group = Group.objects.create(name='Модератор')

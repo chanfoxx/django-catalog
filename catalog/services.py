@@ -1,10 +1,11 @@
 from django.conf import settings
 from django.core.cache import cache
+
 from catalog.models import Category
 
 
 def get_category_cache(pk):
-    """Получение категории из кэша или базы данных."""
+    """ Получение категории из кэша или базы данных. """
     if settings.CACHE_ENABLED:
         key = f'category_{pk}'
         category = cache.get(key)
@@ -18,7 +19,7 @@ def get_category_cache(pk):
 
 
 def get_categories_cache():
-    """Получение всех категорий из кэша или базы данных."""
+    """ Получение всех категорий из кэша или базы данных. """
     if settings.CACHE_ENABLED:
         key = 'category_list'
         category_list = cache.get(key)
