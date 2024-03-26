@@ -25,12 +25,12 @@ load_dotenv(dotenv_path=dot_env)
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-05eqb%+@v5!9ybp7_^22#i%d_%mju(wq^e)*py=rdc(_u4ey6-'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS')]
 
 # Application definition
 
@@ -46,8 +46,6 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'users',
-    'mailing',
-    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -91,8 +89,8 @@ DATABASES = {
         'NAME': os.getenv('POSTGRES_DB'),
         'USER': os.getenv('POSTGRES_USER'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': 'db',  # Название сервиса в docker-compose.yaml
-        'PORT': '5432'
+        # 'HOST': os.getenv('POSTGRES_HOST'),  # Название сервиса в docker-compose.yaml
+        # 'PORT': os.getenv('POSTGRES_PORT')
     }
 }
 
@@ -117,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = os.getenv('LANGUAGE_CODE')
 
 TIME_ZONE = 'Europe/Moscow'
 
@@ -143,8 +141,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Fixture file for database.
 
-CATEGORY_FILE = os.path.join(BASE_DIR, 'fixtures', 'category.json')
-PRODUCT_FILE = os.path.join(BASE_DIR, 'fixtures', 'product.json')
+CATEGORY_FILE = os.path.join(BASE_DIR, 'catalog', 'fixtures', 'category.json')
+PRODUCT_FILE = os.path.join(BASE_DIR, 'catalog', 'fixtures', 'product.json')
 
 # Crispy Forms - Bootstrap 5
 # https://github.com/django-crispy-forms/crispy-bootstrap5
@@ -168,18 +166,9 @@ LOGIN_URL = '/users/'
 
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = os.getenv('EMAIL_APP')
+EMAIL_HOST_USER = os.getenv('APP_EMAIL')
 EMAIL_HOST_PASSWORD = os.getenv('APP_PASSWORD')
 EMAIL_USE_SSL = True
-
-# Crontab settings
-CRON_LOG = os.path.join(BASE_DIR, 'tmp', 'scheduled_job.log')
-
-CRONJOBS = [
-    ('*/1 * * * *', 'mailing.cron.change_status_launched', '>>' + CRON_LOG),
-    ('*/2 * * * *', 'mailing.cron.mailing_in_frequency', '>>' + CRON_LOG),
-    ('*/4 * * * *', 'mailing.cron.change_status_completed', '>>' + CRON_LOG),
-]
 
 # Cash register
 CACHE_ENABLED = os.getenv('CACHE_ENABLED')
