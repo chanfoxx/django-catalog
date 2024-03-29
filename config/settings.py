@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS')]
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(' ')
 
 # Application definition
 
@@ -156,6 +156,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 HOST = os.getenv('HOST', default='http://localhost:8000')
 
 # Users settings
+# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-user-model
 
 AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = '/'
